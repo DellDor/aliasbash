@@ -164,3 +164,11 @@ echo "Busca y pregunta para eliminar todos los directorios vacíos
 find ./ -empty -exec rm -ri {} \;"
 find ./ -empty -exec rm -vri {} \;
 }
+
+lightdmactualiza(){
+usuario=$(whoami)
+export usuario
+
+sudo sed -i "s/#autologin-user=/autologin-user=${usuario}/g" /etc/lightdm/lightdm.conf
+sudo sed -i '#autologin-user-timeout=0/#autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
+}
