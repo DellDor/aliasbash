@@ -170,5 +170,5 @@ usuario=$(whoami)
 export usuario
 
 sudo sed -i "s/#autologin-user=/autologin-user=${usuario}/g" /etc/lightdm/lightdm.conf
-sudo sed -i '#autologin-user-timeout=0/#autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
+sudo sed -i "s/#autologin-user-timeout=0/autologin-user-timeout=0/g" /etc/lightdm/lightdm.conf
 }
