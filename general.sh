@@ -11,6 +11,11 @@ alias ll='ls -l --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color
 alias la='ls -la --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias df='df -h' 
 
+aliasreinicia(){
+if [ ! -e ~/.delldor/bashrc/bashrc_original ]; then
+install -D ~/.bashrc ~/.delldor/bashrc/bashrc_original
+fi
+
 #Detecta si se llama a bash_aliases 
 if ! grep -qe "~/.bash_aliases ]" ~/.bashrc; then
 echo "
@@ -20,6 +25,15 @@ exec ~/.bash_aliases
 fi" >>  ~/.bashrc
 fi
 
+#cat ~/.delldor/bashrc/bashrc_original > ~/.bashrc
+#Solo los terminados en sh son añadidos
+rm ~/.bash_aliases; touch ~/.bash_aliases 
+for i in $(find ~/.delldor/bashrc/*.sh); do
+cat $i |tee -a ~/.bash_aliases
+done
+echo "Ejecutando reinicio de bash"
+exec bash
+}
 
 # exa - extractor de archivos
 # usage: ex <file>
