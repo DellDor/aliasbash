@@ -1,10 +1,14 @@
 #Generales, que deben ser independientes de la distribución
-#Todos los alias y funciones deben seguir principio KISS y hacer una sola cosa, pero hacerla bien, de forma que es preferible crear varios alias y que se llamen unos a otros en lug
-ar de tener complejos
+#Todos los alias y funciones deben seguir principio KISS y hacer una sola cosa, pero hacerla bien, de forma que es preferible crear varios alias y que se llamen unos a otros en lugar de tener complejos
 
 #Activa autocompletar en sudo
 complete -cf sudo
 set LC_MESSAGES="es"
+
+echo "==================
+Arrancando .bashrc"
+
+PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\]\[\e[1;37m\] '
 
 alias ls='ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias ll='ls -l --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
