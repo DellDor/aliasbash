@@ -1,6 +1,6 @@
 #Todo lo exclusivo a Debian y sus derivados: Mint, Ubuntu,etc
 #Se debe priviligear el uso de apt-get y aptitude en segunda instancia, para evitar conflictos en distribuciones rolling o semirroling
-#Tratar de no usar apt porque dizque cambia mucho, segun su ayuda
+#Tratar de no usar apt porque dizque cambia mucho, segun su propia ayuda
 
 alias cdpkg='cd /var/cache/apt/archives'
 alias a1='aptitude'
@@ -25,12 +25,14 @@ alias act='read -p "Actualizar todo el sistema parte por parte. Pulsa Enter" a; 
 
 it(){
 #Solo aptitude permite untrusted con opción directa
+echo "A instalar $@"
 sudo aptitude install --allow-untrusted -dy "$@"
-sudo apt install "$@"
+sudo apt-get install "$@"
 }
 
 alias its='sudo aptitude install -R'
 alias itc='sudo aptitude install -r'
+alias itv='sudo aptitude install --visual-preview'
 
 liberapt() {
 sudo rm -v /var/lib/dpkg/lock /var/cache/apt/archives/lock /var/lock/aptitude
@@ -66,6 +68,8 @@ Primero intenta con:
 sudo aptitude safe-upgrade
 
 Enter empieza" a
+
+sudo bash -c "apt-get upgrade -s |grep 'Inst '| cut -d' ' -f2| grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z] -e ^uno -e ^ure -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. |xargs -l1 aptitude safe-upgrade --allow-new-installs --allow-untrusted -y"
 
 sudo bash -c "aptitude search -F '%p' --disable-columns '~U'| grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z]|xargs -l1 apt-get install"
 paplay /usr/share/sounds/KDE-Im-Nudge.ogg
