@@ -36,7 +36,8 @@ sudo aptitude safe-upgrade
 
 Enter empieza" a
 
-sudo bash -c "sudo aptitude safe-upgrade $(aptitude search '?or(~pstandard, ~pimportant, ~prequired, ~E) ~U' -F %p) --visual-preview
+  sudo bash -c "grep -h '^deb.*security' /etc/apt/sources.list /etc/apt/sources.list.d/* >/tmp/b && apt-get dist-upgrade -o Dir::Etc::SourceList=/tmp/b -o Dir::Etc::sourceparts=/nonexistingdir
+sudo aptitude safe-upgrade $(aptitude search '?or(~pstandard, ~pimportant, ~prequired, ~E) ~U' -F %p) --visual-preview
 apt-get upgrade -s |grep 'Inst '| cut -d' ' -f2| grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z] -e ^uno -e ^ure -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. -e python |xargs -l1 aptitude install --safe-resolver --allow-new-installs --allow-untrusted -y"
 read -p "Enter para continuar con posibilidad de preguntar si borrar algún paquete" a
 sudo bash -c "aptitude search -F '%p' --disable-columns '~U'| grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z]|xargs -l1 apt-get install"
