@@ -145,12 +145,12 @@ alias buscacontenido='grep -lir'
 #alias buscaqui='find "`pwd`" -iname'
 alias buscavacios='find "`pwd`" -empty'
 
-buscaquisudo(){
+busca_aqui_sudo(){
 echo "Busca con sudo todo lo que contenga \"$1\" en `pwd` y subcarpetas"
 sudo find `pwd` -iname "*$1*"
 }
 
-buscaqui(){
+busca_aqui(){
 echo "Busca todo lo que contenga \"$1\" en `pwd` y subcarpetas"
 direccion=${pwd}
 find ${direccion} -iname "*${1}*" 2>/dev/null
@@ -158,17 +158,20 @@ echo "**************************
 Esta búsqueda se hizo sin sudo"
 }
 
-borravacio()
+borra_vacio()
 {
 echo "Busca y pregunta para eliminar todos los directorios vacíos
 find ./ -empty -exec rm -ri {} \;"
 find ./ -empty -exec rm -vri {} \;
 }
 
-lightdmactualiza(){
+lightdm_actualiza(){
+echo "Actualiza el archivo de configuración de lightdm para que entre automáticamente el usuario actual"
 usuario=$(whoami)
 export usuario
 
+read -p "Pulsa Enter para añadir al $usuario"
+
 sudo sed -i "s/#autologin-user=/autologin-user=${usuario}/g" /etc/lightdm/lightdm.conf
-sudo sed -i "s/#autologin-user-timeout=0/autologin-user-timeout=0/g" /etc/lightdm/lightdm.conf
+sudo sed -i 's/#autologin-user-timeout=0/autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
 }
