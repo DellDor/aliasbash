@@ -26,8 +26,8 @@ fuente="https://raw.githubusercontent.com/DellDor/aliasbash/master"
 #TODO: comprobar si se descargó, sino no borrar bash_aliases
 rm ~/.bash_aliases; touch ~/.bash_aliases 
 
-for i in .bash_aliases_debian.sh .bash_aliases_redes.sh .bash_aliases_general.sh; do
-wget -c -P$HOME $fuente/$i
+for i in .bash_aliases_general.sh .bash_aliases_debian.sh .bash_aliases_redes.sh; do
+wget -P$HOME $fuente/$i
 chmod a+x $HOME/$i
 echo ".  ~/$i" >> $HOME/.bash_aliases
 done
