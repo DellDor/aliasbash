@@ -1,3 +1,4 @@
+#5 feb 2016
 #Generales, que deben ser independientes de la distribución
 #Todos los alias y funciones deben seguir principio KISS y hacer una sola cosa, pero hacerla bien, de forma que es preferible crear varios alias y que se llamen unos a otros en lugar de tener complejos
 
@@ -23,11 +24,12 @@ alias df='df -h'
 alias_descarga(){
 fuente="https://raw.githubusercontent.com/DellDor/aliasbash/master"
 
-#TODO: comprobar si se descargó, sino no borrar bash_aliases
-rm ~/.bash_aliases; touch ~/.bash_aliases 
-
-for i in .bash_aliases_general.sh .bash_aliases_debian.sh .bash_aliases_redes.sh; do
-wget -P$HOME $fuente/$i
+if wget -c -P$HOME $fuente/.bash_aliases_general.sh; then
+echo ".  ~/.bash_aliases_general.sh" > $HOME/.bash_aliases
+chmod a+x $HOME/.bash_aliases_general.sh $HOME/.bash_aliases
+{
+for i in  .bash_aliases_debian.sh .bash_aliases_redes.sh; do
+wget -c -P$HOME $fuente/$i
 chmod a+x $HOME/$i
 echo ".  ~/$i" >> $HOME/.bash_aliases
 done
@@ -41,8 +43,11 @@ exec ~/.bash_aliases
 fi" >>  ~/.bashrc
 fi
 }
+fi
+exec bash
+}
 
-aliasreinicia(){
+alias_reinicia(){
 echo "Ejecutando reinicio de bash"
 exec bash
 }
