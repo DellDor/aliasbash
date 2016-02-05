@@ -17,7 +17,7 @@ sudo sh -c "aptitude -d safe-upgrade; apt-get -d dist-upgrade"
 }
 
 act2() {
-echo "Buscar actualizar todos los paquetes"
+echo "Actualiza todos los paquetes"
 sudo sh -c "aptitude --visual-preview safe-upgrade; aptitude --visual-preview full-upgrade; apt-get upgrade"
 }
 
@@ -52,9 +52,7 @@ alias its='sudo aptitude install -R'
 alias itc='sudo aptitude install -r'
 alias itv='sudo aptitude install --visual-preview'
 
-liberapt() {
-sudo rm -v /var/lib/dpkg/lock /var/cache/apt/archives/lock /var/lock/aptitude
-}
+alias liberapt='sudo rm -v /var/{lib/dpkg/lock,cache/apt/archives/lock,lock/aptitude}'
 
 alias reconfigurartodo='sudo dpkg --configure -a'
 alias bo='sudo aptitude remove --purge --visual-preview'
@@ -72,4 +70,15 @@ find "$1" -iname "*.deb" -exec sudo cp -vu {} /var/cache/apt/archives/ \;
 agregaclave(){
 echo -e "Procesando clave: $1"
 gpg --keyserver subkeys.pgp.net --recv $1 | gpg --keyserver  keyserver.ubuntu.com --recv $1 && gpg --export --armor $1 && sudo apt-key add -
+}
+
+lightdmactualiza(){
+echo "Actualiza el archivo de configuración de lightdm para que entre automáticamente el usuario actual"
+usuario=$(whoami)
+export usuario
+
+echo "El usuario a añadir es $usuario"
+
+sudo sed -i "s/#autologin-user=/autologin-user=${usuario}/g" /etc/lightdm/lightdm.conf
+sudo sed -i '#autologin-user-timeout=0/#autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
 }
