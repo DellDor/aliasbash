@@ -5,6 +5,10 @@
 complete -cf sudo
 set LC_MESSAGES="es"
 
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+
 echo "==================
 Arrancando .bashrc"
 
@@ -14,13 +18,21 @@ alias ls='ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=au
 alias ll='ls -l --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias la='ls -la --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias df='df -h' 
+#########################
 
-aliasreinicia(){
-if [ ! -e ~/.delldor/bashrc/bashrc_original ]; then
-install -D ~/.bashrc ~/.delldor/bashrc/bashrc_original
-fi
+alias_descarga(){
+fuente="https://raw.githubusercontent.com/DellDor/aliasbash/master"
 
-#Detecta si se llama a bash_aliases 
+#TODO: comprobar si se descargó, sino no borrar bash_aliases
+rm ~/.bash_aliases; touch ~/.bash_aliases 
+
+for i in .bash_aliases_debian.sh .bash_aliases_redes.sh .bash_aliases_general.sh; do
+wget -c -P$HOME $fuente/$i
+chmod a+x $HOME/$i
+echo ".  ~/$i" >> $HOME/.bash_aliases
+done
+
+#Detecta si se llama a bash_aliases desde .bashrc
 if ! grep -qe "~/.bash_aliases ]" ~/.bashrc; then
 echo "
 if [ -e ~/.bash_aliases ]
@@ -28,19 +40,17 @@ then
 exec ~/.bash_aliases
 fi" >>  ~/.bashrc
 fi
+}
 
-#cat ~/.delldor/bashrc/bashrc_original > ~/.bashrc
-#Solo los terminados en sh son añadidos
-rm ~/.bash_aliases; touch ~/.bash_aliases 
-for i in $(find ~/.delldor/bashrc/*.sh); do
-cat $i |tee -a ~/.bash_aliases
-done
+aliasreinicia(){
 echo "Ejecutando reinicio de bash"
 exec bash
 }
 
+alias aliasedita='ls $HOME/.bash_aliases*.sh| xargs -l1 xdg-open && aliasreinicia'
+
 # exa - extractor de archivos
-# usage: ex <file>
+# uso: ex <file>
 exa(){
  if [ -f $1 ] ; then
    case $1 in
@@ -70,35 +80,6 @@ alias apagamonitor='xset dpms force off'
 alias reinicia='sudo reboot'
 alias apaga='sudo poweroff'
 
-#Revisar qué editor está instalado y marcarlo, ordenado
-for i in geany kate pluma leafpad
-do
-if [ ! "x"$(dpkg-query -W $i 2> /dev/null| awk '{print $2}') == "x" ]; then 
-EDITOR=$i
-break
-fi
-done
-echo "EDITOR $EDITOR"
-
-#Navegador
-for i in iceweasel firefox opera qupzilla chromium chrome
-do
-if [ ! "x"$(dpkg-query -W $i 2> /dev/null| awk '{print $2}') == "x" ]; then 
-NAVEGADOR=$i
-break
-fi
-done
-echo "NAVEGADOR $NAVEGADOR"
-
-#Archivador
-for i in pcmanfm-qt caja pcmanfm
-do
-if [ ! "x"$(dpkg-query -W $i 2> /dev/null| awk '{print $2}') == "x" ]; then 
-ARCHIVADOR=$i
-break
-fi
-done
-echo "ARCHIVADOR $ARCHIVADOR"
 temperatura() {
 sudo sensors |grep °
 sudo hddtemp /dev/sda
