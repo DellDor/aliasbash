@@ -12,7 +12,7 @@ alias dameip='wget -q icanhazip.com -O -'
 alias descarga='wget -c -P~/Descargas/'
 
 actualizahora(){
-if ! `whereis ntpdate` > /dev/null 2>1; then
+if ! `whereis ntpdate` > /dev/null 2>&1; then
 it ntpdate
 fi
 sudo bash -c "ntpdate -uv south-america.pool.ntp.org && hwclock -w" 
