@@ -23,13 +23,13 @@ sudo sh -c "aptitude --visual-preview safe-upgrade; aptitude --visual-preview fu
 
 alias act='read -p "Actualizar todo el sistema parte por parte. Pulsa Enter" a; act0; act1; act2; act3'
 
-actunoporunosinconex(){
+act_uno_por_uno_sin_conex(){
 read -p "Si hay que instalar algo, no se ejecuta. No descarga nuevos paquetes. Enter empieza" a
 sudo bash -c "aptitude search -F '%p' --disable-columns '~U'| grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z] -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. |xargs -l1 apt-get install --no-install-recommends --no-download"
 paplay /usr/share/sounds/KDE-Im-Nudge.ogg
 }
 
-actunoporuno(){
+actuno_por_uno(){
 echo "################ #################### ########################
 
 Actualiza paquetes importantes y el resto uno por uno."
@@ -52,33 +52,22 @@ alias its='sudo aptitude install -R'
 alias itc='sudo aptitude install -r'
 alias itv='sudo aptitude install --visual-preview'
 
-alias liberapt='sudo rm -v /var/{lib/dpkg/lock,cache/apt/archives/lock,lock/aptitude}'
+alias libera_apt='sudo rm -v /var/{lib/dpkg/lock,cache/apt/archives/lock,lock/aptitude}'
 
-alias reconfigurartodo='sudo dpkg --configure -a'
+alias reconfigurar_todo='sudo dpkg --configure -a'
 alias bo='sudo aptitude remove --purge --visual-preview'
 
-descargapaq() {
+descarga_paq() {
 echo "Descarga paquete con sus respectivas dependencias faltantes"
 sudo apt-get -y --print-uris install "$1" | egrep -o -e "(ht|f)tp://[^\']+" | xargs -l1 sudo wget -c -P/var/cache/apt/archives/partial
 }
 
-cppaqueteacache(){
+cp_paquete_a_cache(){
 echo "Copia desde la carpeta pasada como parámetro a la cache local de paquetes"
 find "$1" -iname "*.deb" -exec sudo cp -vu {} /var/cache/apt/archives/ \;
 }
 
-agregaclave(){
+agrega_clave(){
 echo -e "Procesando clave: $1"
 gpg --keyserver subkeys.pgp.net --recv $1 | gpg --keyserver  keyserver.ubuntu.com --recv $1 && gpg --export --armor $1 && sudo apt-key add -
-}
-
-lightdmactualiza(){
-echo "Actualiza el archivo de configuración de lightdm para que entre automáticamente el usuario actual"
-usuario=$(whoami)
-export usuario
-
-echo "El usuario a añadir es $usuario"
-
-sudo sed -i "s/#autologin-user=/autologin-user=${usuario}/g" /etc/lightdm/lightdm.conf
-sudo sed -i '#autologin-user-timeout=0/#autologin-user-timeout=0/g' /etc/lightdm/lightdm.conf
 }
