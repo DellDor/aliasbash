@@ -28,7 +28,7 @@ echo ".  ~/.bash_aliases_general.sh" > $HOME/.bash_aliases
 chmod a+x $HOME/.bash_aliases_general.sh $HOME/.bash_aliases
 {
 for i in  .bash_aliases_debian.sh .bash_aliases_redes.sh; do
-wget -c -P$HOME $fuente/$i
+cd $HOME && { curl -#O $fuente/$i ; cd -; } 
 chmod a+x $HOME/$i
 echo ".  ~/$i" >> $HOME/.bash_aliases
 done
