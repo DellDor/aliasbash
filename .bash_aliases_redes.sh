@@ -19,3 +19,5 @@ sudo bash -c "ntpdate -uv south-america.pool.ntp.org && hwclock -w"
 }
 
 alias youtube-dl='youtube-dl -c --no-part'
+
+alias youtubedescarga='youtube-dl -f 17 -t -c --no-part --console-title'
