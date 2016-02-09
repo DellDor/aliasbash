@@ -5,6 +5,7 @@
 #Activa autocompletar en sudo
 complete -cf sudo
 set LC_MESSAGES="es"
+setxkbmap -layout es
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -18,6 +19,14 @@ alias ls='ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=au
 alias ll='ls -l --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias la='ls -la --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias df='df -h' 
+
+
+dir () { 
+#Si se añade R se convierte en recursivo 
+ls --color=auto --format=vertical -lpa|more 
+echo "Total en este directorio" $(du -h -s `pwd`|awk '{print $1}') 
+df -h -x tmpfs -x devpts -x usbfs 
+} 
 #########################
 
 alias_descarga(){
@@ -143,14 +152,13 @@ echo "**************************
 Esta búsqueda se hizo sin sudo"
 }
 
-borra_vacio()
-{
+borra_vacio() {
 echo "Busca y pregunta para eliminar todos los directorios vacíos
 find ./ -empty -exec rm -ri {} \;"
 find ./ -empty -exec rm -vri {} \;
 }
 
-lightdm_actualiza(){
+lightdm_actualiza() {
 echo "Actualiza el archivo de configuración de lightdm para que entre automáticamente el usuario actual"
 usuario=$(whoami)
 export usuario
