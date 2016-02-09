@@ -24,6 +24,14 @@ sudo sh -c "aptitude --visual-preview safe-upgrade; aptitude --visual-preview fu
 
 alias act='read -p "Actualizar todo el sistema parte por parte. Pulsa Enter" a; act0; act1; act2; act3'
 
+act_axel() {
+echo "Descarga con axel a ~/Borrable/paquetes/ y al final mueve los descargados. Actualizar previamente la lista de repositorio"
+mkdir -p  /var/tmp/paquetes
+cd /var/tmp/paquetes
+apt-get upgrade -y --print-uris | egrep -o -e "(ht|f)tp://[^\']+" |xargs -l1 sudo axel -an 3
+sudo mv -vu /var/tmp/paquetes/*.deb /var/cache/apt/archives/
+}
+
 act_uno_por_uno_sin_conex(){
 read -p "Si hay que instalar algo, no se ejecuta. No descarga nuevos paquetes. Enter empieza" a
 sudo bash -c "aptitude search -F '%p' --disable-columns '~U'| grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z] -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. |xargs -l1 apt-get install --no-install-recommends --no-download"
@@ -49,6 +57,17 @@ echo "A instalar $@"
 sudo aptitude install --allow-untrusted -dy "$@"
 sudo apt-get install "$@"
 }
+
+itd(){
+#Descarga paquete con sus respectivas dependencias faltantes
+apt-get -y --print-uris install "$1" | egrep -o -e "(ht|f)tp://[^\']+" | xargs -l1 sudo wget -c -P/var/cache/apt/archives/partial
+}
+
+itdlis(){
+echo "Muestra lista de direcciones de a descargar por $1"
+sudo apt-get install "$1" --print-uris -y| tr "'" "\n"|grep //
+}
+
 
 alias its='sudo aptitude install -R'
 alias itc='sudo aptitude install -r'
