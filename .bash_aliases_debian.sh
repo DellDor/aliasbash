@@ -59,7 +59,7 @@ sudo apt-get install "$@"
 }
 
 itd(){
-#Descarga paquete con sus respectivas dependencias faltantes
+echo "Descarga paquete con sus respectivas dependencias faltantes"
 apt-get -y --print-uris install "$1" | egrep -o -e "(ht|f)tp://[^\']+" | xargs -l1 sudo wget -c -P/var/cache/apt/archives/partial
 }
 
@@ -78,15 +78,26 @@ alias libera_apt='sudo rm -v /var/{lib/dpkg/lock,cache/apt/archives/lock,lock/ap
 alias reconfigurar_todo='sudo dpkg --configure -a'
 alias bo='sudo aptitude remove --purge --visual-preview'
 
-descarga_paq() {
-echo "Descarga paquete con sus respectivas dependencias faltantes"
-sudo apt-get -y --print-uris install "$1" | egrep -o -e "(ht|f)tp://[^\']+" | xargs -l1 sudo wget -c -P/var/cache/apt/archives/partial
+paquetes_huerfanos() {
+ sudo deborphan -a |awk '{ print $2  }'|sort > /tmp/paquetes.txt; $editor /tmp/paquetes.txt
 }
 
 cp_paquete_a_cache(){
 echo "Copia desde la carpeta pasada como parámetro a la cache local de paquetes"
 find "$1" -iname "*.deb" -exec sudo cp -vu {} /var/cache/apt/archives/ \;
 }
+
+
+reposexternosdes() {
+find /etc/apt/sources.list.d/ -iname "*.list" -exec sudo sed -i 's/deb /#deb /g' {} \;
+find /etc/apt/sources.list.d/ -iname "*.list" -exec sudo sed -i 's/##/#/g' {} \;
+}
+
+reposexternosact() {
+find /etc/apt/sources.list.d/ -iname "*.list" -exec sudo sed -i 's/##/#/g' {} \;
+find /etc/apt/sources.list.d/ -iname "*.list" -exec sudo sed -i 's/#deb /deb /g' {} \;
+}
+
 
 agrega_clave(){
 echo -e "Procesando clave: $1"
