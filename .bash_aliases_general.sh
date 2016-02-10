@@ -45,8 +45,7 @@ echo "if [ -e ~/.bash_aliases ]; then
 . ~/.bash_aliases
 fi" >>  ~/.bashrc
 fi
-echo "exec bash" >> .bash_history
-echo "Pulsa arriba y Enter para reiniciar bash"
+echo "Recuerda llamar a exec bash"
 fi
 }
 
