@@ -81,6 +81,10 @@ exa(){
 }
 
 alias rm='rm -v'
+
+#Enviar archivos a la papelera de reciclaje
+alias borrar='gvfs-trash'
+
 alias wget='wget -c'
 
 alias apagamonitor='xset dpms force off'
