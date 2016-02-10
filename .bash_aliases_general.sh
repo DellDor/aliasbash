@@ -31,8 +31,8 @@ df -h -x tmpfs -x devpts -x usbfs
 
 alias_descarga(){
 fuente="https://raw.githubusercontent.com/DellDor/aliasbash/master"
-
-if wget -c -P$HOME $fuente/.bash_aliases_general.sh; then
+#if wget -c -P$HOME $fuente/.bash_aliases_general.sh; then
+if curl --fail -#O $fuente/.bash_aliases_general.sh; then
 echo ".  ~/.bash_aliases_general.sh" > $HOME/.bash_aliases
 chmod a+x $HOME/.bash_aliases_general.sh $HOME/.bash_aliases
 {
