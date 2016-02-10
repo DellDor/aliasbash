@@ -1,4 +1,4 @@
-#5 feb 2016
+#10 feb 2016
 #Generales, que deben ser independientes de la distribución
 #Todos los alias y funciones deben seguir principio KISS y hacer una sola cosa, pero hacerla bien, de forma que es preferible crear varios alias y que se llamen unos a otros en lugar de tener complejos
 
@@ -7,7 +7,7 @@ complete -cf sudo
 set LC_MESSAGES="es"
 setxkbmap -layout es
 
-# colored GCC warnings and errors
+# Errores y advertencias de GCC coloreadas
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 echo "==================
@@ -20,42 +20,36 @@ alias ll='ls -l --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color
 alias la='ls -la --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias df='df -h' 
 
-
 dir() { 
 #Si se añade R se convierte en recursivo 
 ls --color=auto --format=vertical -lpa|more 
 echo "Total en este directorio" $(du -h -s `pwd`|awk '{print $1}') 
 df -h -x tmpfs -x devpts -x usbfs 
 } 
-#########################
 
-alias_descarga(){
+alias_descarga() {
 fuente="https://raw.githubusercontent.com/DellDor/aliasbash/master"
 #if wget -c -P$HOME $fuente/.bash_aliases_general.sh; then
-if curl --fail -#O $fuente/.bash_aliases_general.sh; then
-echo ".  ~/.bash_aliases_general.sh" > $HOME/.bash_aliases
+if curl --fail $fuente/.bash_aliases_general.sh > $HOME/.bash_aliases_general.sh; then
+echo "#!/bin/bash
+.  ~/.bash_aliases_general.sh" > $HOME/.bash_aliases
 chmod a+x $HOME/.bash_aliases_general.sh $HOME/.bash_aliases
-{
-for i in  .bash_aliases_debian.sh .bash_aliases_redes.sh; do
-cd $HOME && { curl -#O $fuente/$i ; cd -; } 
+for i in .bash_aliases_debian.sh .bash_aliases_redes.sh; do
+curl $fuente/$i > $HOME/$i 
 chmod a+x $HOME/$i
-echo ".  ~/$i" >> $HOME/.bash_aliases
+echo ". ~/$i" >> $HOME/.bash_aliases
 done
 
 #Detecta si se llama a bash_aliases desde .bashrc
 if ! grep -qe "~/.bash_aliases ]" ~/.bashrc; then
-echo "
-if [ -e ~/.bash_aliases ]
-then
-exec ~/.bash_aliases
+echo "if [ -e ~/.bash_aliases ]; then
+. ~/.bash_aliases
 fi" >>  ~/.bashrc
 fi
-}
 fi
-exec bash
 }
 
-alias_reinicia(){
+alias_reinicia() {
 echo "Ejecutando reinicio de bash"
 exec bash
 }
@@ -169,4 +163,3 @@ sudo sed -i "s/#autologin-user=/autologin-user=${usuario}/g" /etc/lightdm/lightd
 sudo sed -i "s/#autologin-user-timeout=0/autologin-user-timeout=0/g" /etc/lightdm/lightdm.conf
 }
 
-############################
