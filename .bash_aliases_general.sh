@@ -30,23 +30,23 @@ df -h -x tmpfs -x devpts -x usbfs
 alias_descarga() {
 fuente="https://raw.githubusercontent.com/DellDor/aliasbash/master"
 #if wget -c -P$HOME $fuente/.bash_aliases_general.sh; then
-if curl --fail $fuente/.bash_aliases_general.sh > $HOME/.bash_aliases_general.sh; then
+if curl --fail -# $fuente/.bash_aliases_general.sh > $HOME/.bash_aliases_general.sh; then
 echo "#!/bin/bash
-.  ~/.bash_aliases_general.sh" > $HOME/.bash_aliases
+. ~/.bash_aliases_general.sh" > $HOME/.bash_aliases
 chmod a+x $HOME/.bash_aliases_general.sh $HOME/.bash_aliases
 for i in .bash_aliases_debian.sh .bash_aliases_redes.sh; do
-curl $fuente/$i > $HOME/$i 
+curl -# $fuente/$i > $HOME/$i 
 chmod a+x $HOME/$i
 echo ". ~/$i" >> $HOME/.bash_aliases
 done
-
-#Detecta si se llama a bash_aliases desde .bashrc
+#Detecta si se llama a bash_aliases desde .bashrc:
 if ! grep -qe "~/.bash_aliases ]" ~/.bashrc; then
 echo "if [ -e ~/.bash_aliases ]; then
 . ~/.bash_aliases
 fi" >>  ~/.bashrc
 fi
-exec bash
+echo "exec bash" >> .bash_history
+echo "Pulsa arriba y Enter para reiniciar bash"
 fi
 }
 
