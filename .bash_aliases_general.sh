@@ -21,7 +21,7 @@ alias la='ls -la --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --colo
 alias df='df -h' 
 
 
-dir () { 
+dir() { 
 #Si se añade R se convierte en recursivo 
 ls --color=auto --format=vertical -lpa|more 
 echo "Total en este directorio" $(du -h -s `pwd`|awk '{print $1}') 
