@@ -1,4 +1,4 @@
-#5 feb 2016
+#11 feb 2016
 #Todo lo exclusivo a Debian y sus derivados: Mint, Ubuntu,etc
 #Se debe priviligear el uso de apt-get y aptitude en segunda instancia, para evitar conflictos en distribuciones rolling o semirroling
 #Tratar de no usar apt porque dizque cambia mucho, segun su propia ayuda
@@ -77,6 +77,9 @@ alias libera_apt='sudo rm -v /var/{lib/dpkg/lock,cache/apt/archives/lock,lock/ap
 
 alias reconfigurar_todo='sudo dpkg --configure -a'
 alias bo='sudo aptitude remove --purge --visual-preview'
+
+#idica paquete que provee archivo
+alias paquete_duegno='dpkg -S'
 
 paquetes_huerfanos() {
  sudo deborphan -a |awk '{ print $2  }'|sort > /tmp/paquetes.txt; $editor /tmp/paquetes.txt
