@@ -3,6 +3,8 @@
 #Se debe priviligear el uso de apt-get y aptitude en segunda instancia, para evitar conflictos en distribuciones rolling o semirroling
 #Tratar de no usar apt porque dizque cambia mucho, segun su propia ayuda
 
+complete -F _aptitude $default install purge show search
+
 alias cdpkg='cd /var/cache/apt/archives'
 alias a1='aptitude'
 alias a2='sudo aptitude'
