@@ -1,4 +1,4 @@
-#10 feb 2016
+#feb 2016
 #Generales, que deben ser independientes de la distribución
 #Todos los alias y funciones deben seguir principio KISS y hacer una sola cosa, pero hacerla bien, de forma que es preferible crear varios alias y que se llamen unos a otros en lugar de tener complejos
 
@@ -13,7 +13,9 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 echo "==================
 Arrancando .bashrc"
 
-PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\]\[\e[1;37m\] '
+#PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\]\[\e[1;37m\] '
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
 
 alias ls='ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias ll='ls -l --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
@@ -41,7 +43,7 @@ echo ". ~/$i" >> $HOME/.bash_aliases
 done
 #Detecta si se llama a bash_aliases desde .bashrc:
 if ! grep -qe "~/.bash_aliases ]" ~/.bashrc; then
-echo "if [ -e ~/.bash_aliases ]; then
+echo "if [ -f ~/.bash_aliases ]; then
 . ~/.bash_aliases
 fi" >>  ~/.bashrc
 fi
