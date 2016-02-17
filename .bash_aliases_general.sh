@@ -56,7 +56,7 @@ echo "Ejecutando reinicio de bash"
 exec bash
 }
 
-alias aliasedita='ls $HOME/.bash_aliases*.sh| xargs -l1 xdg-open && aliasreinicia'
+alias aliasedita='find $HOME -iname ".bash_aliases_*" -exec xdg-open {} \;; echo "Recuerda ejecutar exec bash"'
 
 # exa - extractor de archivos
 # uso: ex <file>
