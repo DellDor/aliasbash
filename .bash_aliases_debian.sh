@@ -27,7 +27,7 @@ sudo sh -c "aptitude --visual-preview safe-upgrade; aptitude --visual-preview fu
 alias act='read -p "Actualizar todo el sistema parte por parte. Pulsa Enter" a; act0; act1; act2; act3'
 
 act_axel() {
-echo "Descarga con axel a ~/Borrable/paquetes/ y al final mueve los descargados. Actualizar previamente la lista de repositorio"
+echo "Descarga con axel a /var/tmp/paquetes y al final mueve los descargados. Actualizar previamente la lista de repositorio"
 mkdir -p  /var/tmp/paquetes
 cd /var/tmp/paquetes
 apt-get upgrade -y --print-uris | egrep -o -e "(ht|f)tp://[^\']+" |xargs -l1 sudo axel -an 3
@@ -37,7 +37,7 @@ sudo mv -vu /var/tmp/paquetes/*.deb /var/cache/apt/archives/
 act_uno_por_uno_sin_conex(){
 read -p "Si hay que instalar algo, no se ejecuta. No descarga nuevos paquetes. Enter empieza" a
 sudo bash -c "aptitude search -F '%p' --disable-columns '~U'| grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z] -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. |xargs -l1 apt-get install --no-install-recommends --no-download"
-paplay /usr/share/sounds/KDE-Im-Nudge.ogg
+#paplay /usr/share/sounds/KDE-Im-Nudge.ogg
 }
 
 actuno_por_uno(){
@@ -46,11 +46,16 @@ echo "################ #################### ########################
 Actualiza paquetes importantes y el resto uno por uno."
 
 sudo bash -c "grep -h '^deb.*security' /etc/apt/sources.list /etc/apt/sources.list.d/* >/tmp/borrame && aptitude safe-upgrade -o Dir::Etc::SourceList=/tmp/borrame -o Dir::Etc::sourceparts=/nonexistingdir && aptitude search '?or(~pstandard, ~pimportant, ~prequired, ~E) ~U' -F %p |xargs aptitude safe-upgrade  && \
-echo "#############Sigue todo sin bibliotecas ni eliminación#############" && apt-get upgrade -s |grep 'Inst '| cut -d' ' -f2| grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z] -e ^uno -e ^ure -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. -e python |xargs -l1 apt-get install --no-remove -y"
-##aptitude install --safe-resolver --allow-new-installs --allow-untrusted -y
+echo "#############Sigue todo sin bibliotecas ni eliminación#############" && \
+for i in `aptitude search '~U' -F %p`; do
+killall apt-get apt-mark
+apt-get install --no-remove -q=2 --allow-unauthenticated $i && sudo apt-mark auto $i
+done && \
 read -p "Enter para continuar con posibilidad de preguntar si borrar algún paquete" a
 sudo bash -c "aptitude search -F '%p' --disable-columns '~U'| grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z]|xargs -l1 apt-get install"
 #paplay /usr/share/sounds/KDE-Im-Nudge.ogg
+#apt-get upgrade -s |grep 'Inst '| cut -d' ' -f2| grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z] -e ^uno -e ^ure -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. -e python |xargs -l1 apt-get install --no-remove -y"
+##aptitude install --safe-resolver --allow-new-installs --allow-untrusted -y
 }
 
 it(){
@@ -70,7 +75,6 @@ echo "Muestra lista de direcciones de a descargar por $1"
 sudo apt-get install "$1" --print-uris -y| tr "'" "\n"|grep //
 }
 
-
 alias its='sudo aptitude install -R'
 alias itc='sudo aptitude install -r'
 alias itv='sudo aptitude install --visual-preview'
@@ -84,7 +88,7 @@ alias bo='sudo aptitude remove --purge --visual-preview'
 alias paquete_duegno='dpkg -S'
 
 paquetes_huerfanos() {
- sudo deborphan -a |awk '{ print $2  }'|sort > /tmp/paquetes.txt; $editor /tmp/paquetes.txt
+sudo deborphan -a |awk '{ print $2  }'|sort > /tmp/paquetes.txt; xdg-open /tmp/paquetes.txt
 }
 
 cp_paquete_a_cache(){
