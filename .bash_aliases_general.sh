@@ -13,7 +13,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 echo "==================
 Arrancando .bashrc"
 
-#De http://bashrcgenerator.com/
+#De http://bashrcgenerator.com/ y https://www.kirsle.net/wizards/ps1.html
 export PS1="\[\033[38;5;2m\]\u\[$(tput sgr0)\]\[\033[38;5;11m\]@\[$(tput sgr0)\]\[\033[38;5;14m\]\h\[$(tput sgr0)\]\[\033[38;5;15m\]:\[$(tput bold)\]\[$(tput sgr0)\]\[\033[38;5;27m\]\w\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;10m\]\\$\[$(tput sgr0)\]"
 
 
@@ -22,7 +22,7 @@ alias ll='ls -l --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color
 alias la='ls -la --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias df='df -h' 
 
-dir() { 
+dir() {
 #Si se añade R se convierte en recursivo 
 ls --color=auto --format=vertical -lpa|more 
 echo "Total en este directorio" $(du -h -s `pwd`|awk '{print $1}') 
