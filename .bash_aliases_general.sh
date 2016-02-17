@@ -13,9 +13,8 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 echo "==================
 Arrancando .bashrc"
 
-#De http://bashrcgenerator.com/ y https://www.kirsle.net/wizards/ps1.html
-export PS1="\[\033[38;5;2m\]\u\[$(tput sgr0)\]\[\033[38;5;11m\]@\[$(tput sgr0)\]\[\033[38;5;14m\]\h\[$(tput sgr0)\]\[\033[38;5;15m\]:\[$(tput bold)\]\[$(tput sgr0)\]\[\033[38;5;27m\]\w\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;10m\]\\$\[$(tput sgr0)\]"
-
+#De http://bashrcgenerator.com/ y https://www.kirsle.net/wizards/ps1.html; https://wiki.archlinux.org/index.php/Color_Bash_Prompt_%28Espa%C3%B1ol%29
+export PS1="\[$(tput bold)\]\[$(tput setaf 2)\]\u\[$(tput setaf 1)\]@\[$(tput setaf 3)\]\h|\[$(tput setaf 6)\]\w|\[$(tput setaf 4)\]\\$ \[$(tput sgr0)\]"
 
 alias ls='ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias ll='ls -l --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
