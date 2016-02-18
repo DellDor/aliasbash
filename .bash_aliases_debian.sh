@@ -1,4 +1,4 @@
-#11 feb 2016
+#feb 2016
 #Todo lo exclusivo a Debian y sus derivados: Mint, Ubuntu,etc
 #Se debe priviligear el uso de apt-get y aptitude en segunda instancia, para evitar conflictos en distribuciones rolling o semirroling
 #Tratar de no usar apt porque dizque cambia mucho, segun su propia ayuda
@@ -9,7 +9,7 @@ alias cdpkg='cd /var/cache/apt/archives'
 alias a1='aptitude'
 alias a2='sudo aptitude'
 
-act0() {
+act0(){
 echo "Actualiza listado de paquetería"
 sudo apt-get update -o Acquire::Pdiff=true -o Acquire::Check-Valid-Until=false
 }
@@ -24,7 +24,12 @@ echo "Actualiza todos los paquetes"
 sudo sh -c "aptitude --visual-preview safe-upgrade; aptitude --visual-preview full-upgrade; apt-get upgrade"
 }
 
-alias act='read -p "Actualizar todo el sistema parte por parte. Pulsa Enter" a; act0; act1; act2; act3'
+act_importantes(){
+echo "Actualiza paquetes de seguridad, importantes y requeridos" 
+sudo bash -c "grep -h '^deb.*security' /etc/apt/sources.list /etc/apt/sources.list.d/* >/tmp/borrame && aptitude safe-upgrade -o Dir::Etc::SourceList=/tmp/borrame -o Dir::Etc::sourceparts=/nonexistingdir && aptitude search '?or(~pstandard, ~pimportant, ~prequired, ~E) ~U' -F %p |xargs aptitude safe-upgrade"
+}
+
+alias act='read -p "Actualizar todo el sistema parte por parte. Pulsa Enter" a; act0; act_importantes; act1; act2'
 
 act_axel() {
 echo "Descarga con axel a /var/tmp/paquetes y al final mueve los descargados. Actualizar previamente la lista de repositorio"
@@ -42,17 +47,15 @@ sudo bash -c "aptitude search -F '%p' --disable-columns '~U'| grep -v -e ^lib[a-
 
 actuno_por_uno(){
 echo "################ #################### ########################
-
-Actualiza paquetes importantes y el resto uno por uno."
-
-sudo bash -c "grep -h '^deb.*security' /etc/apt/sources.list /etc/apt/sources.list.d/* >/tmp/borrame && aptitude safe-upgrade -o Dir::Etc::SourceList=/tmp/borrame -o Dir::Etc::sourceparts=/nonexistingdir && aptitude search '?or(~pstandard, ~pimportant, ~prequired, ~E) ~U' -F %p |xargs aptitude safe-upgrade  && \
-echo "#############Sigue todo sin bibliotecas ni eliminación#############" && \
-for i in `aptitude search '~U' -F %p`; do
+Actualiza uno por uno."
+sudo bash -c "for i in `aptitude search '~U' -F %p`; do
 killall apt-get apt-mark
-apt-get install --no-remove -q=2 --allow-unauthenticated $i && sudo apt-mark auto $i
-done && \
+apt-get install --no-remove -q=2 --allow-unauthenticated $i && \
+apt-mark auto $i
+done
+aptitude"
 read -p "Enter para continuar con posibilidad de preguntar si borrar algún paquete" a
-sudo bash -c "aptitude search -F '%p' --disable-columns '~U'| grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z]|xargs -l1 apt-get install"
+sudo bash -c "aptitude search -F '%p' --disable-columns '~U'| grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z]|xargs -l1 apt-get install --allow-unauthenticated" 
 #paplay /usr/share/sounds/KDE-Im-Nudge.ogg
 #apt-get upgrade -s |grep 'Inst '| cut -d' ' -f2| grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z] -e ^uno -e ^ure -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. -e python |xargs -l1 apt-get install --no-remove -y"
 ##aptitude install --safe-resolver --allow-new-installs --allow-untrusted -y
@@ -71,7 +74,7 @@ apt-get -y --print-uris install "$1" | egrep -o -e "(ht|f)tp://[^\']+" | xargs -
 }
 
 itdlis(){
-echo "Muestra lista de direcciones de a descargar por $1"
+echo "Muestra lista de direcciones de dónde descargar el paquete $1"
 sudo apt-get install "$1" --print-uris -y| tr "'" "\n"|grep //
 }
 
@@ -114,7 +117,6 @@ reposexternosact() {
 find /etc/apt/sources.list.d/ -iname "*.list" -exec sudo sed -i 's/##/#/g' {} \;
 find /etc/apt/sources.list.d/ -iname "*.list" -exec sudo sed -i 's/#deb /deb /g' {} \;
 }
-
 
 agrega_clave(){
 echo -e "Procesando clave: $1"
