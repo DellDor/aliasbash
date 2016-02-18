@@ -24,6 +24,16 @@ echo "Actualiza todos los paquetes"
 sudo sh -c "aptitude --visual-preview safe-upgrade; aptitude --visual-preview full-upgrade; apt-get upgrade"
 }
 
+act_maquina(){
+echo "Actualiza los paquetes señalados en ~.importantes_pkg"
+if [ -f $HOME/.importantes_pkg ]; then
+for i in $(cat $HOME/.importantes_pkg); do
+sudo killall apt-get apt-mark
+sudo apt-get install --no-remove -y --allow-unauthenticated $i
+done
+fi
+}
+
 act_importantes(){
 echo "Actualiza paquetes de seguridad, importantes y requeridos" 
 sudo bash -c "grep -h '^deb.*security' /etc/apt/sources.list /etc/apt/sources.list.d/* >/tmp/borrame && aptitude safe-upgrade -o Dir::Etc::SourceList=/tmp/borrame -o Dir::Etc::sourceparts=/nonexistingdir && aptitude search '?or(~pstandard, ~pimportant, ~prequired, ~E) ~U' -F %p |xargs aptitude safe-upgrade"
