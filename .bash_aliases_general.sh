@@ -90,8 +90,9 @@ alias borrar='gvfs-trash'
 
 alias apagamonitor='xset dpms force off'
 
-alias reinicia='sudo reboot'
-alias apaga='sudo poweroff'
+alias reinicia='systemctl reboot'
+alias apaga='systemctl poweroff'
+alias suspende='systemctl suspend'
 
 temperatura() {
 sudo sensors |grep °
@@ -108,13 +109,6 @@ $@"
 `$@`
 	  let "n+=1"
 	  done
-}
-
-suspende(){
-#sudo pm-suspen
-#echo mem |sudo tee /sys/power/state
-systemctl suspend
-
 }
 
 ayudaapaga(){
@@ -174,4 +168,3 @@ read -p "Pulsa Enter para añadir al usuario \" $usuario \" "
 sudo sed -i "s/#autologin-user=/autologin-user=${usuario}/g" /etc/lightdm/lightdm.conf
 sudo sed -i "s/#autologin-user-timeout=0/autologin-user-timeout=0/g" /etc/lightdm/lightdm.conf
 }
-
