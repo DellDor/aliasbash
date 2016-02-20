@@ -1,5 +1,6 @@
 #feb 2016
-#Todo lo exclusivo a Debian y sus derivados: Mint, Ubuntu,etc
+#TODO: Hacer alias de paquetería agnóstica, usando pkcon (packagekit) con todo lo que se pueda hacer con él
+#Aquí lo exclusivo a Debian y sus derivados: Mint, Ubuntu,etc
 #Se debe priviligear el uso de apt-get y aptitude en segunda instancia, para evitar conflictos en distribuciones rolling o semirroling
 #Tratar de no usar apt porque dizque cambia mucho, segun su propia ayuda
 
