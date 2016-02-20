@@ -110,8 +110,14 @@ $@"
 	  done
 }
 
-ayudaapaga()
-{
+suspende(){
+#sudo pm-suspen
+#echo mem |sudo tee /sys/power/state
+systemctl suspend
+
+}
+
+ayudaapaga(){
 echo "
 #~ Apagado programado por terminal
 #~ halt, poweroff y shutdown
