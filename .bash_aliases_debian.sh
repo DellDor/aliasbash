@@ -81,7 +81,7 @@ sudo apt-get install "$@"
 
 itd(){
 echo "Descarga paquete con sus respectivas dependencias faltantes"
-apt-get -y --print-uris install "$1" | egrep -o -e "(ht|f)tp://[^\']+" | xargs -l1 sudo wget -c -P/var/cache/apt/archives/partial
+apt-get -y --print-uris install "$1" | egrep -o -e "(ht|f)tp://[^\']+" | xargs -l1 sudo wget -c -P/var/cache/apt/archives/
 }
 
 itdlis(){
