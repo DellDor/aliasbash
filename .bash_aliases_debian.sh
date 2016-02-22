@@ -72,12 +72,12 @@ sudo bash -c "aptitude search -F '%p' --disable-columns '~U'| grep -v -e ^lib[a-
 ##aptitude install --safe-resolver --allow-new-installs --allow-untrusted -y
 }
 
-it(){
+#it(){
 #Solo aptitude permite untrusted con opción directa
-echo "A instalar $@"
-sudo aptitude install --allow-untrusted -dy "$@"
-sudo apt-get install "$@"
-}
+#echo "A instalar $@"
+#sudo aptitude install --allow-untrusted -dy "$@"
+#sudo apt-get install "$@"
+#}
 
 itd(){
 echo "Descarga paquete con sus respectivas dependencias faltantes"
@@ -96,7 +96,7 @@ alias itv='sudo aptitude install --visual-preview'
 alias libera_apt='sudo rm -v /var/{lib/dpkg/lock,cache/apt/archives/lock,lock/aptitude}'
 
 alias reconfigurar_todo='sudo dpkg --configure -a'
-alias bo='sudo aptitude remove --purge --visual-preview'
+#alias bo='sudo aptitude remove --purge --visual-preview'
 
 #idica paquete que provee archivo
 alias paquete_duegno='dpkg -S'
