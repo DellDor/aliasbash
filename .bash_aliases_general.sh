@@ -5,7 +5,7 @@
 #Activa autocompletar en sudo
 complete -cf sudo
 set LC_MESSAGES="es"
-setxkbmap -layout es
+setxkbmap -layout latam
 
 # Errores y advertencias de GCC coloreadas
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -168,3 +168,7 @@ read -p "Pulsa Enter para añadir al usuario \" $usuario \" "
 sudo sed -i "s/#autologin-user=/autologin-user=${usuario}/g" /etc/lightdm/lightdm.conf
 sudo sed -i "s/#autologin-user-timeout=0/autologin-user-timeout=0/g" /etc/lightdm/lightdm.conf
 }
+
+alias it='sudo pkcon install'
+alias itd_aqui='sudo pkcon download ./' 
+alias bo='sudo pkcon remove'
