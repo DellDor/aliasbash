@@ -113,7 +113,7 @@ find "$1" -iname "*.deb" -exec sudo cp -vu {} /var/cache/apt/archives/ \;
 descarga_repos_debian() {
 #inicial="${PWD##}"
 #cd /var/tmp
-wget -Nc -P/var/tmp https://github.com/DellDor/InstaladoresDebian/raw/master/repositorios_debian.sh
+wget -N -P/var/tmp https://github.com/DellDor/InstaladoresDebian/raw/master/repositorios_debian.sh
 chmod a+x /var/tmp/repositorios_debian.sh 
 . /var/tmp/repositorios_debian.sh
 #cd $inicial
