@@ -5,7 +5,8 @@
 #Activa autocompletar en sudo
 complete -cf sudo
 set LC_MESSAGES="es"
-setxkbmap -layout latam
+setxkbmap -layout latam #opción es
+alias sudo='sudo '
 
 # Errores y advertencias de GCC coloreadas
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
