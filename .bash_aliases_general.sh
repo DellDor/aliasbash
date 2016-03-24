@@ -2,11 +2,13 @@
 #Generales, que deben ser independientes de la distribución
 #Todos los alias y funciones deben seguir principio KISS y hacer una sola cosa, pero hacerla bien, de forma que es preferible crear varios alias y que se llamen unos a otros en lugar de tener complejos
 
+. /etc/bash_completion
 #Activa autocompletar en sudo
 complete -cf sudo
+alias sudo='sudo '
+
 set LC_MESSAGES="es"
 setxkbmap -layout latam #opción es
-alias sudo='sudo '
 
 # Errores y advertencias de GCC coloreadas
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
