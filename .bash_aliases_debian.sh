@@ -135,10 +135,12 @@ echo -e "Procesando clave: $1"
 gpg --keyserver subkeys.pgp.net --recv $1 | gpg --keyserver  keyserver.ubuntu.com --recv $1 && gpg --export --armor $1 && sudo apt-key add -
 }
 
-limpia_repo(){
+limpia_apt_cacher(){
 #Limpiar repo local con lo ya presente en apt-cacher-ng. Si no está instalado, da error y continúa.
 sudo cp -vua /var/cache/apt/archives/*.deb /var/cache/apt-cacher-ng/_import
 x-www-browser http://localhost:3142/acng-report.html?doImport=Start+Import
-sudo fslint-gui /var/cache/{apt,apt-cacher-ng}
 sudo aptitude autoclean
+sudo fslint-gui /var/cache/{apt,apt-cacher-ng}
+x-www-browser http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
+x-www-browser http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
 }
