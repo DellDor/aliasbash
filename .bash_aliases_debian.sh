@@ -140,7 +140,8 @@ limpia_apt_cacher(){
 sudo cp -vua /var/cache/apt/archives/*.deb /var/cache/apt-cacher-ng/_import
 x-www-browser http://localhost:3142/acng-report.html?doImport=Start+Import
 sudo aptitude autoclean
-sudo fslint-gui /var/cache/{apt,apt-cacher-ng}
+#sudo fslint-gui /var/cache/{apt,apt-cacher-ng}
+sudo fdupes -nf -R /var/cache/apt{-cacher-ng,-cacher-ng/_import,}/ |grep .deb$|xargs sudo rm -v
 x-www-browser http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
 x-www-browser http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
 }
