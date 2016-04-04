@@ -39,6 +39,9 @@ fuente="https://raw.githubusercontent.com/DellDor/aliasbash/master"
 #if wget -N -P$HOME $fuente/.bash_aliases_general.sh; then
 if curl --fail -# $fuente/.bash_aliases_general.sh > $HOME/.bash_aliases_general.sh; then
 echo "#!/bin/bash
+if [ -f ~/.bash_aliases_local.sh ]; then
+. ~/.bash_aliases_local.sh
+fi
 . ~/.bash_aliases_general.sh" > $HOME/.bash_aliases
 chmod a+x $HOME/.bash_aliases_general.sh $HOME/.bash_aliases
 for i in .bash_aliases_debian.sh .bash_aliases_redes.sh; do
