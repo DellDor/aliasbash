@@ -145,3 +145,8 @@ sudo fdupes -nf -R /var/cache/apt{-cacher-ng,-cacher-ng/_import,}/ |grep .deb$|x
 x-www-browser http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
 x-www-browser http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
 }
+
+acttodo(){
+export -f act0 act_importantes actuno_por_uno
+su -c 'act0; act_importantes; actuno_por_uno; aptitude --visual-preview safe-upgrade'
+}
