@@ -8,7 +8,7 @@ sleep 20
 done
 }
 
-alias dameip='wget -q icanhazip.com -O -'
+alias dameip='curl -q icanhazip.com' #'wget -q icanhazip.com -O -'
 alias descarga='wget -c -P~/Descargas/'
 
 actualizahora(){
