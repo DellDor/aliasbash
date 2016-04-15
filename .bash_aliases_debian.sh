@@ -65,7 +65,11 @@ sudo bash -c 'for i in `aptitude search \'~U' -F %p`; do
 if echo ${i}|grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z] -e ^mono > /dev/null; then
 echo "Analizando $i. Esperando 3 segundos para cancelar con seguridad."
 sleep 3
+cosa=$(ps -fe |awk '(/apt-mark/ || /apt-get/) && !/awk/')
+if  [[ $cosa > /dev/null ]];
+then
 killall apt-get apt-mark
+fi
 apt-get install --no-remove -q=2 --allow-unauthenticated ${i} && apt-mark auto ${i}
 fi
 done'
