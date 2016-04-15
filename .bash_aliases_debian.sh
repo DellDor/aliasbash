@@ -63,7 +63,8 @@ echo "################ #################### ########################
 Actualiza uno por uno."
 sudo bash -c 'for i in `aptitude search \'~U' -F %p`; do
 if echo ${i}|grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z] -e ^mono > /dev/null; then
-echo "Analizando $i"
+echo "Analizando $i. Esperando 3 segundos para cancelar con seguridad."
+sleep 3
 killall apt-get apt-mark
 apt-get install --no-remove -q=2 --allow-unauthenticated ${i} && apt-mark auto ${i}
 fi
