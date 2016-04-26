@@ -1,7 +1,7 @@
-#feb 2016
-#TODO: Hacer alias de paquetería agnóstica, usando pkcon (packagekit) con todo lo que se pueda hacer con él
+#mar 2016
+#TODO: Pasar a _general todo lo que se pueda hacer directamente con pkcon (packagekit)
 #Aquí lo exclusivo a Debian y sus derivados: Mint, Ubuntu,etc
-#Se debe priviligear el uso de apt-get y aptitude en segunda instancia, para evitar conflictos en distribuciones rolling o semirroling
+#Se debe privilegiar el uso de apt-get y aptitude en segunda instancia, para evitar conflictos en distribuciones rolling o semirroling
 #Tratar de no usar apt porque dizque cambia mucho, segun su propia ayuda
 
 complete -F _aptitude $default install purge show search
