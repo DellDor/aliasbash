@@ -44,7 +44,9 @@ if [ -f ~/.bash_aliases_local.sh ]; then
 fi
 . ~/.bash_aliases_general.sh" > $HOME/.bash_aliases
 chmod a+x $HOME/.bash_aliases_general.sh $HOME/.bash_aliases
+
 for i in .bash_aliases_debian.sh .bash_aliases_redes.sh; do
+echo "Descargando $i"
 curl -# $fuente/$i > $HOME/$i 
 chmod a+x $HOME/$i
 echo ". ~/$i" >> $HOME/.bash_aliases
