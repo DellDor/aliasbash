@@ -1,4 +1,4 @@
-#feb 2016
+#mar 2016
 #Generales, que deben ser independientes de la distribución
 #Todos los alias y funciones deben seguir principio KISS y hacer una sola cosa, pero hacerla bien, de forma que es preferible crear varios alias y que se llamen unos a otros en lugar de tener complejos
 
@@ -31,7 +31,7 @@ dir() {
 #Si se añade R se convierte en recursivo 
 ls --color=auto --format=vertical -lpa
 echo "Total en este directorio" $(du -h -s `pwd`|awk '{print $1}') 
-df -h -x tmpfs -x devpts -x usbfs 
+df -h -x tmpfs -x devpts -x usbfs -x devtmpfs
 } 
 
 alias_descarga() {
