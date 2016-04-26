@@ -155,3 +155,52 @@ acttodo(){
 export -f act0 act_importantes actuno_por_uno
 su -c 'act0; act_importantes; actuno_por_uno; aptitude --visual-preview safe-upgrade'
 }
+
+liberaespacio(){
+#Pensado con internet, para recuperar cosas borradas y con bleachbit como centro.
+#http://www.cyberciti.biz/faq/how-do-i-find-the-largest-filesdirectories-on-a-linuxunixbsd-filesystem/
+seguir(){
+df -h -x tmpfs -x devpts -x usbfs -x devtmpfs
+read p "
+
+Enter para seguir borrando. Ctrl+C para parar" a
+}
+miracache(){
+sudo find /var/cache/ -printf '%s %p\n'| sort -nr| head -n 10| xargs dirname|sort|uniq|grep -v "^.$"|sort|uniq|xargs -l1 sudo xdg-open
+}
+miracache
+seguir
+miracache
+seguir
+sudo rm -rv /var/cache/apt-cacher-ng/packages.linuxmint.com/pool/import/f/firefox/
+sudo rm -rv /var/cache/apt-cacher-ng/sparkylinux.org/repo/pool/main/s/sparky*
+seguir
+#HACER: verificar instalación bleachbit
+bleachbit
+seguir
+sudo bleachbit
+seguir
+#HACER: Verificasr si está instalado apt-cacher-ng
+sudo cp -vua /var/cache/apt/archives/*.deb /var/cache/apt-cacher-ng/_import
+sudo find /var/cache -empty -type d -exec rm -rv {} \; 
+x-www-browser http://localhost:3142/acng-report.html?doImport=Start+Import
+#HACER: verificar instalación fdupes
+sudo fdupes -nf -R /var/cache/apt{-cacher-ng,-cacher-ng/_import,}/ |grep .deb$|xargs sudo rm -v
+x-www-browser http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
+seguir
+x-www-browser http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
+sudo find /var/cache -empty -type d -exec rm -rv {} \; 
+seguir
+sudo aptitude clean
+seguir
+sudo rm -v /var/cache/apt-cacher-ng/_import/*.deb
+seguir
+sudo rm -rv /var/lib/apt/lists/*
+seguir
+rm -rv ~/.fgfs/TerraSync/*
+seguir
+sudo find /var/tmp -size +512k -exec rm {} \;
+#sudo find /var/tmp  -printf '%s %p\n'| sort -nr 
+seguir
+miracache
+}
