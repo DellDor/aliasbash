@@ -8,7 +8,7 @@ complete -F _aptitude $default install purge show search
 
 alias cdpkg='cd /var/cache/apt/archives'
 alias a1='aptitude'
-alias a2='sudo aptitude'
+alias a2='sudo aptitud'
 
 act0(){
 echo "Actualiza listado de paquetería"
@@ -96,8 +96,11 @@ sudo apt-get install "$1" --print-uris -y| tr "'" "\n"|grep //
 }
 
 alias its='sudo aptitude install -R'
+alias itp='sudo aptitude install'
 alias itc='sudo aptitude install -r'
 alias itv='sudo aptitude install --visual-preview'
+alias bop='sudo aptitude remove'
+alias itdp='sudo aptitude install -d'
 
 alias libera_apt='sudo rm -v /var/{lib/dpkg/lock,cache/apt/archives/lock,lock/aptitude}'
 
@@ -200,7 +203,7 @@ seguir
 rm -rv ~/.fgfs/TerraSync/*
 seguir
 sudo find /var/tmp -size +512k -exec rm {} \;
-#sudo find /var/tmp  -printf '%s %p\n'| sort -nr 
+rm -i $(sudo find /var/tmp -type f -printf '%s %p\n'| sort -nr |cut -d" " -f2)
 seguir
 miracache
 }
