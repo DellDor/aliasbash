@@ -61,7 +61,7 @@ sudo bash -c "aptitude search -F '%p' --disable-columns '~U'| grep -v -e ^lib[a-
 actuno_por_uno(){
 echo "################ #################### ########################
 Actualiza uno por uno."
-sudo bash -c 'for i in `aptitude search \'~U' -F %p`; do
+sudo bash -c 'for i in `aptitude search \'~U' -F %p|shuf`; do
 if echo ${i}|grep -v -e ^lib[a-q] -e ^lib[s-z] -e ^wine -e python -e plasma -e ruby -e ^glib -e common -e data -e ^gir1. -e ^libr[a-d] -e ^libr[f-z] -e ^libre[a-n] -e ^libre[p-z] -e ^mono > /dev/null; then
 echo "Analizando $i. Esperando 2 segundos para cancelar con seguridad.
 "
@@ -158,7 +158,7 @@ echo -e "Procesando clave: $1"
 gpg --keyserver subkeys.pgp.net --recv $1 | gpg --keyserver  keyserver.ubuntu.com --recv $1 && gpg --export --armor $1 && sudo apt-key add -
 }
 
-limpia_apt_cacher(){
+limpia_apt-cacher(){
 #Limpiar repo local con lo ya presente en apt-cacher-ng. Si no está instalado, da error y continúa.
 sudo cp -vua /var/cache/apt/archives/*.deb /var/cache/apt-cacher-ng/_import
 x-www-browser http://localhost:3142/acng-report.html?doImport=Start+Import
@@ -167,6 +167,34 @@ sudo aptitude autoclean
 sudo fdupes -nf -R /var/cache/apt{-cacher-ng,-cacher-ng/_import,}/ |grep .deb$|xargs sudo rm -v
 x-www-browser http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
 x-www-browser http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
+}
+
+alias limpia_cache_apt='sudo aptitude autoclean'
+
+limpia_liquorix{
+read -p "Ejecutar sólo luego de instalar liquorix y reiniciar el sistema, de manera que ese sea el kernel que corre. Enter para continuar" a
+#Solo Liquorix
+actual=$(dpkg --get-selections | grep -e linux-image -e linux-header|grep $(uname -r)| awk '{print $1}')
+echo "El núcleo actual es: $actual"
+
+#Otros
+otros=$(dpkg --get-selections | grep -e linux-image -e linux-header|grep -v liquorix| awk '{print $1}')
+
+if  [ "$otros" > /dev/null ]; then
+echo "Otros núcleos instalados (no liquorix) $otros"
+#Eliminamos todos los que no sean liquorix
+sudo aptitude purge --visual-preview  $otros
+#por si hay algún mensaje de error: sudo aptitude install --visual-preview  $otros
+else
+echo "No hay kernels no liquorix instalado"
+fi
+
+#Versiones viejas de Liquorix
+echo "A continuación kernels liquorix antiguos"
+sudo aptitude purge --visual-preview  $(dpkg --get-selections | grep -e linux-image -e linux-header|grep -v $(uname -r)|awk '{print $1}'|grep -ve linux-image-liquorix -ve linux-headers-liquorix)
+
+#Si no se hizo automáticamente, actualizamos Burg o grub:
+#sudo update-burg || sudo update-grub
 }
 
 acttodo(){
