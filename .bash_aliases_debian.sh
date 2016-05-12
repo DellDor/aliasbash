@@ -1,4 +1,4 @@
-#mar 2016
+#may 2016
 #TODO: Pasar a _general todo lo que se pueda hacer directamente con pkcon (packagekit)
 #Aquí lo exclusivo a Debian y sus derivados: Mint, Ubuntu,etc
 #Se debe privilegiar el uso de apt-get y aptitude en segunda instancia, para evitar conflictos en distribuciones rolling o semirroling
@@ -8,7 +8,7 @@ complete -F _aptitude $default install purge show search
 
 alias cdpkg='cd /var/cache/apt/archives'
 alias a1='aptitude'
-alias a2='sudo aptitud'
+alias a2='sudo aptitude'
 
 act0(){
 echo "Actualiza listado de paquetería"
