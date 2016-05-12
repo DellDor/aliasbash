@@ -171,7 +171,7 @@ x-www-browser http://localhost:3142/acng-report.html?justRemove=Delete+unreferen
 
 alias limpia_cache_apt='sudo aptitude autoclean'
 
-limpia_liquorix{
+limpia_liquorix(){
 read -p "Ejecutar sólo luego de instalar liquorix y reiniciar el sistema, de manera que ese sea el kernel que corre. Enter para continuar" a
 #Solo Liquorix
 actual=$(dpkg --get-selections | grep -e linux-image -e linux-header|grep $(uname -r)| awk '{print $1}')
