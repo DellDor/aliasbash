@@ -165,6 +165,7 @@ sudo cp -vua /var/cache/apt/archives/*.deb /var/cache/apt-cacher-ng/_import
 x-www-browser http://localhost:3142/acng-report.html?doImport=Start+Import
 sudo aptitude autoclean
 #sudo fslint-gui /var/cache/{apt,apt-cacher-ng}
+sudo fdupes -nf -R /var/cache/apt{-cacher-ng,-cacher-ng/_import,}/ |grep .deb$|xargs sudo rm -v
 x-www-browser http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
 x-www-browser http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
 }
@@ -192,7 +193,6 @@ fi
 #Versiones viejas de Liquorix
 echo "A continuación kernels liquorix antiguos"
 sudo aptitude purge --visual-preview  $(dpkg --get-selections | grep -e linux-image -e linux-header|grep -v $(uname -r)|awk '{print $1}'|grep -ve linux-image-liquorix -ve linux-headers-liquorix)
-
 #Si no se hizo automáticamente, actualizamos Burg o grub:
 #sudo update-burg || sudo update-grub
 }
@@ -207,7 +207,7 @@ liberaespacio(){
 #http://www.cyberciti.biz/faq/how-do-i-find-the-largest-filesdirectories-on-a-linuxunixbsd-filesystem/
 seguir(){
 df -h -x tmpfs -x devpts -x usbfs -x devtmpfs
-read p "
+read -p "
 
 Enter para seguir borrando. Ctrl+C para parar" a
 }
@@ -219,7 +219,7 @@ seguir
 miracache
 seguir
 sudo rm -rv /var/cache/apt-cacher-ng/packages.linuxmint.com/pool/import/f/firefox/
-sudo rm -rv /var/cache/apt-cacher-ng/sparkylinux.org/repo/pool/main/s/sparky*
+sudo rm -rv /var/cache/apt-cacher-ng/sparkylinux.org/repo/pool/main/s/sparky/
 seguir
 #HACER: verificar instalación bleachbit
 bleachbit
