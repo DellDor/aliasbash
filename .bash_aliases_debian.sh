@@ -158,17 +158,28 @@ echo -e "Procesando clave: $1"
 gpg --keyserver subkeys.pgp.net --recv $1 | gpg --keyserver  keyserver.ubuntu.com --recv $1 && gpg --export --armor $1 && sudo apt-key add -
 }
 
-limpia_apt-cacher() {
+limpia_apt_cacher() {
 #Limpiar repo local con lo ya presente en apt-cacher-ng. Si no está instalado, da error y continúa.
 sudo fdupes -nf -R /var/cache/apt{-cacher-ng,-cacher-ng/_import,}/ |grep .deb$|xargs sudo rm -v
 sudo cp -vua /var/cache/apt/archives/*.deb /var/cache/apt-cacher-ng/_import
-x-www-browser http://localhost:3142/acng-report.html?doImport=Start+Import
+curl http://localhost:3142/acng-report.html?doImport=Start+Import
 sudo aptitude autoclean
-#sudo fslint-gui /var/cache/{apt,apt-cacher-ng}
 sudo fdupes -nf -R /var/cache/apt{-cacher-ng,-cacher-ng/_import,}/ |grep .deb$|xargs sudo rm -v
-x-www-browser http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
-x-www-browser http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
+curl http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
+curl http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
 }
+
+limpia_apt_cacher2(){
+#Limpiar repo local con lo ya presente en apt-cacher-ng. Versión con gui
+sudo fslint-gui /var/cache/{apt,apt-cacher-ng}
+sudo cp -vua /var/cache/apt/archives/*.deb /var/cache/apt-cacher-ng/_import
+netsurfer http://localhost:3142/acng-report.html?doImport=Start+Import
+sudo aptitude autoclean
+netsurfer http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
+netsurfer http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
+sudo fslint-gui /var/cache/{apt,apt-cacher-ng}
+}
+
 
 alias limpia_cache_apt='sudo aptitude autoclean'
 
