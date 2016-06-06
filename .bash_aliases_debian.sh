@@ -165,7 +165,7 @@ sudo cp -vua /var/cache/apt/archives/*.deb /var/cache/apt-cacher-ng/_import
 curl http://localhost:3142/acng-report.html?doImport=Start+Import
 sudo aptitude autoclean
 sudo fdupes -nf -R /var/cache/apt{-cacher-ng,-cacher-ng/_import,}/ |grep .deb$|xargs sudo rm -v
-curl http://localhost:3142/acng-report.html?abortOnErrors=aOe&byPath=bP&byChecksum=bS&truncNow=tN&incomAsDamaged=iad&purgeNow=pN&doExpire=Start+Scan+and%2For+Expiration&calcSize=cs&asNeeded=an#bottom
+curl "http://localhost:3142/acng-report.html?abortOnErrors=aOe&byPath=bP&byChecksum=bS&truncNow=tN&incomAsDamaged=iad&purgeNow=pN&doExpire=Start+Scan+and%2For+Expiration&calcSize=cs&asNeeded=an#bottom"
 curl http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
 curl http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
 }
@@ -177,7 +177,7 @@ limpia_apt_cachervisual(){
 sudo cp -vua /var/cache/apt/archives/*.deb /var/cache/apt-cacher-ng/_import
 netsurf http://localhost:3142/acng-report.html?doImport=Start+Import
 sudo aptitude autoclean
-netsurf http://localhost:3142/acng-report.html?abortOnErrors=aOe&byPath=bP&byChecksum=bS&truncNow=tN&incomAsDamaged=iad&purgeNow=pN&doExpire=Start+Scan+and%2For+Expiration&calcSize=cs&asNeeded=an#bottom
+netsurf "http://localhost:3142/acng-report.html?abortOnErrors=aOe&byPath=bP&byChecksum=bS&truncNow=tN&incomAsDamaged=iad&purgeNow=pN&doExpire=Start+Scan+and%2For+Expiration&calcSize=cs&asNeeded=an#bottom"
 netsurf http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
 netsurf http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
 echo "Filtros usables:
