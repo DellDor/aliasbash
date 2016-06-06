@@ -167,6 +167,7 @@ sudo aptitude autoclean
 sudo fdupes -nf -R /var/cache/apt{-cacher-ng,-cacher-ng/_import,}/ |grep .deb$|xargs sudo rm -v
 curl http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
 curl http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
+#http://localhost:3142/acng-report.html?abortOnErrors=aOe&byPath=bP&byChecksum=bS&truncNow=tN&incomAsDamaged=iad&purgeNow=pN&doExpire=Start+Scan+and%2For+Expiration&calcSize=cs&asNeeded=an#bottom
 }
 
 limpia_apt_cacher2(){
