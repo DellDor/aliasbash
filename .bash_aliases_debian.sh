@@ -165,19 +165,24 @@ sudo cp -vua /var/cache/apt/archives/*.deb /var/cache/apt-cacher-ng/_import
 curl http://localhost:3142/acng-report.html?doImport=Start+Import
 sudo aptitude autoclean
 sudo fdupes -nf -R /var/cache/apt{-cacher-ng,-cacher-ng/_import,}/ |grep .deb$|xargs sudo rm -v
+curl http://localhost:3142/acng-report.html?abortOnErrors=aOe&byPath=bP&byChecksum=bS&truncNow=tN&incomAsDamaged=iad&purgeNow=pN&doExpire=Start+Scan+and%2For+Expiration&calcSize=cs&asNeeded=an#bottom
 curl http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
 curl http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
-#http://localhost:3142/acng-report.html?abortOnErrors=aOe&byPath=bP&byChecksum=bS&truncNow=tN&incomAsDamaged=iad&purgeNow=pN&doExpire=Start+Scan+and%2For+Expiration&calcSize=cs&asNeeded=an#bottom
 }
 
-limpia_apt_cacher2(){
+limpia_apt_cachervisual(){
 #Limpiar repo local con lo ya presente en apt-cacher-ng. Versión con gui
-sudo fslint-gui /var/cache/{apt,apt-cacher-ng}
+#HACER: Revisar si está instalado netsurf
+#~sudo fslint-gui /var/cache/{apt,apt-cacher-ng}
 sudo cp -vua /var/cache/apt/archives/*.deb /var/cache/apt-cacher-ng/_import
-netsurfer http://localhost:3142/acng-report.html?doImport=Start+Import
+netsurf http://localhost:3142/acng-report.html?doImport=Start+Import
 sudo aptitude autoclean
-netsurfer http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
-netsurfer http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
+netsurf http://localhost:3142/acng-report.html?abortOnErrors=aOe&byPath=bP&byChecksum=bS&truncNow=tN&incomAsDamaged=iad&purgeNow=pN&doExpire=Start+Scan+and%2For+Expiration&calcSize=cs&asNeeded=an#bottom
+netsurf http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged
+netsurf http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
+echo "Filtros usables:
+  */archives*/
+  */_import/*"
 sudo fslint-gui /var/cache/{apt,apt-cacher-ng}
 }
 
