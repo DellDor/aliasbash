@@ -1,8 +1,9 @@
-#may 2016
-#TODO: Pasar a _general todo lo que se pueda hacer directamente con pkcon (packagekit)
+#jun 2016
+#HACER: Pasar a _general todo lo que se pueda hacer directamente con pkcon (packagekit)
 #Aquí lo exclusivo a Debian y sus derivados: Mint, Ubuntu,etc
 #Se debe privilegiar el uso de apt-get y aptitude en segunda instancia, para evitar conflictos en distribuciones rolling o semirroling
 #Tratar de no usar apt porque dizque cambia mucho, segun su propia ayuda
+#MEJORA: Que se use pacapt desde 
 
 complete -F _aptitude $default install purge show search
 
@@ -175,6 +176,7 @@ limpia_apt_cachervisual(){
 #HACER: Revisar si está instalado netsurf
 #~sudo fslint-gui /var/cache/{apt,apt-cacher-ng}
 sudo cp -vua /var/cache/apt/archives/*.deb /var/cache/apt-cacher-ng/_import
+#Puede ser x-www-browser o gnome-browser
 netsurf http://localhost:3142/acng-report.html?doImport=Start+Import
 sudo aptitude autoclean
 netsurf "http://localhost:3142/acng-report.html?abortOnErrors=aOe&byPath=bP&byChecksum=bS&truncNow=tN&incomAsDamaged=iad&purgeNow=pN&doExpire=Start+Scan+and%2For+Expiration&calcSize=cs&asNeeded=an#bottom"
