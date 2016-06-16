@@ -54,9 +54,11 @@ echo ". ~/$i" >> $HOME/.bash_aliases
 done
 #Detecta si se llama a bash_aliases desde .bashrc:
 if ! grep -qe "~/.bash_aliases ]" ~/.bashrc; then
-echo "if [ -f ~/.bash_aliases ]; then
+cat >> ~/.bashrc << EOD 
+if [ -f ~/.bash_aliases ]; then
 . ~/.bash_aliases
-fi" >>  ~/.bashrc
+fi
+EOD
 fi
 echo "Recuerda llamar a exec bash"
 fi
