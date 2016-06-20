@@ -135,7 +135,7 @@ echo "Copia desde la carpeta pasada como parámetro a la cache local de paquetes
 find "$1" -iname "*.deb" -exec sudo cp -vu {} /var/cache/apt/archives/ \;
 }
 
-descarga_repos_debian() {
+descargarepos_debian() {
 #inicial="${PWD##}"
 #cd /var/tmp
 wget -N -P/var/tmp https://github.com/DellDor/InstaladoresDebian/raw/master/repositorios_debian.sh
