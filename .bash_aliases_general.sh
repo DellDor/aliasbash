@@ -104,6 +104,7 @@ alias apagamonitor='xset dpms force off'
 alias reinicia='systemctl reboot'
 alias apaga='systemctl poweroff'
 alias suspende='systemctl suspend'
+alias cierrasesiongrafica='pkill -KILL -u $(whoami)'
 
 temperatura() {
 sudo sensors |grep °
