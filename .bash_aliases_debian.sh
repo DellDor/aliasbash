@@ -40,7 +40,7 @@ act_importantes(){
 echo "Actualiza paquetes de seguridad, importantes y requeridos" 
 #sudo bash -c "grep -h '^deb.*security' /etc/apt/sources.list /etc/apt/sources.list.d/* >/tmp/borrame && aptitude safe-upgrade -o Dir::Etc::SourceList=/tmp/borrame -o Dir::Etc::sourceparts=/nonexistingdir &&
 sudo bash -c "LANG=C apt-get dist-upgrade -s|grep Debian-Security| cut -d' ' -f2|sort|uniq|xargs apt-get install;
-aptitude search '?or(~pstandard, ~pimportant, ~prequired, ~E) ~U' -F %p |xargs aptitude safe-upgrade -y"
+aptitude search '?or(~pstandard, ~pimportant, ~prequired, ~E) ~U' -F %p |xargs -l1 aptitude safe-upgrade -y"
 }
 
 alias act='read -p "Actualizar todo el sistema parte por parte. Pulsa Enter" a; act0; act_importantes; act1; act2'
