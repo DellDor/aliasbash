@@ -72,6 +72,7 @@ cosa=$(ps -fe| grep -e apt-mark -e apt-get| grep -v grep)
 if [[ $cosa > /dev/null ]]; then
 killall apt-get apt-mark
 fi
+apt-get -d -y --no-remove install ${i}
 apt-get install --no-remove -q=2 --allow-unauthenticated ${i} && apt-mark auto ${i}
 fi
 done
@@ -85,6 +86,7 @@ cosa=$(ps -fe| grep -e apt-mark -e apt-get| grep -v grep)
 if [[ $cosa > /dev/null ]]; then
 killall apt-get apt-mark
 fi
+apt-get -d -y --no-remove install ${i}
 apt-get install --no-remove -q=2 --allow-unauthenticated ${i} && apt-mark auto ${i}
 fi
 done
