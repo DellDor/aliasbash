@@ -104,8 +104,8 @@ aptitude search -F '%p' --disable-columns '~U'|xargs -l1 sudo apt-get install --
 #}
 
 itd(){
-echo "Descarga paquete con sus respectivas dependencias faltantes"
-apt-get -y --print-uris install "$1" | egrep -o -e "(ht|f)tp://[^\']+" | xargs -l1 sudo wget -c -P/var/cache/apt/archives
+echo "Descarga paquete $@ con sus respectivas dependencias faltantes"
+apt-get -y --print-uris --no-install-recommends install "$@" | egrep -o -e "(ht|f)tp://[^\']+" | xargs -l1 sudo wget -c -P/var/cache/apt/archives
 }
 
 itdlis(){
