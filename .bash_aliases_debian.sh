@@ -26,6 +26,10 @@ echo "Actualiza todos los paquetes"
 sudo sh -c "aptitude --visual-preview safe-upgrade; aptitude --visual-preview full-upgrade; apt-get upgrade"
 }
 
+marca_dependientes(){
+sudo aptitude markauto $(aptitude search '?installed ?not(?automatic) ?or(?reverse-recommends(?installed),?reverse-Depends(?installed))' -F %p)
+}
+
 act_maquina(){
 echo "Actualiza los paquetes señalados en ~.importantes_pkg"
 if [ -f $HOME/.importantes_pkg ]; then
