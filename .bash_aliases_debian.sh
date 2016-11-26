@@ -1,7 +1,7 @@
 #jun 2016
 #HACER: Pasar a _general todo lo que se pueda hacer directamente con pkcon (packagekit)
 #Aquí lo exclusivo a Debian y sus derivados: Mint, Ubuntu,etc
-#Se debe privilegiar el uso de apt-get y aptitude en segunda instancia, para evitar conflictos en distribuciones rolling o semirroling
+#Se debe privilegiar el uso de apt-get y aptitude en segunda instancia, para evitarevitar conflictos en distribuciones rolling o semirroling
 #Tratar de no usar apt porque dizque cambia mucho, segun su propia ayuda
 #MEJORA: Que se use pacapt desde 
 
@@ -112,6 +112,11 @@ echo "Descarga paquete $@ con sus respectivas dependencias faltantes"
 apt-get -y --print-uris --no-install-recommends install "$@" | egrep -o -e "(ht|f)tp://[^\']+" | xargs -l1 sudo wget -c -P/var/cache/apt/archives
 }
 
+itda(){
+echo "Descarga paquete $@ con sus respectivas dependencias faltantes"
+apt-get -y --print-uris --no-install-recommends install "$@" | egrep -o -e "(ht|f)tp://[^\']+" | xargs -l1 sudo axel -an 3 -d /var/cache/apt/archives
+}
+
 itdlis(){
 echo "Muestra lista de direcciones de dónde descargar el paquete $1"
 sudo apt-get install "$1" --print-uris -y| tr "'" "\n"|grep //
@@ -129,7 +134,7 @@ alias libera_apt='sudo rm -v /var/{lib/dpkg/lock,cache/apt/archives/lock,lock/ap
 alias reconfigurar_todo='sudo dpkg --configure -a'
 #alias bo='sudo aptitude remove --purge --visual-preview'
 
-#idica paquete que provee archivo
+#indica paquete que provee archivo
 alias paquete_duegno='dpkg -S'
 
 paquetes_huerfanos() {
