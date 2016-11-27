@@ -1,4 +1,3 @@
-#sep 2016
 #Generales, que deben ser independientes de la distribución
 #Todos los alias y funciones deben seguir principio KISS y hacer una sola cosa, pero hacerla bien, de forma que es preferible crear varios alias y que se llamen unos a otros en lugar de tener complejos
 
@@ -44,7 +43,7 @@ echo "Total en este directorio" $(du -h -s `pwd`|awk '{print $1}')
 df -h -x tmpfs -x devpts -x usbfs -x devtmpfs
 } 
 
-alias_descarga() {
+aliasdescarga() {
 fuente="https://raw.githubusercontent.com/DellDor/aliasbash/master"
 if wget -N -P$HOME $fuente/.bash_aliases_general.sh; then
 #if curl --fail -# $fuente/.bash_aliases_general.sh > $HOME/.bash_aliases_general.sh; then
@@ -74,7 +73,7 @@ echo "Recuerda llamar a exec bash"
 fi
 }
 
-alias_reinicia() {
+aliasreinicia() {
 echo "Ejecutando reinicio de bash"
 exec bash
 }
@@ -161,12 +160,12 @@ alias buscacontenido='grep -lir'
 #alias buscaqui='find "`pwd`" -iname'
 alias buscavacios='find "`pwd`" -empty'
 
-busca_aqui_sudo(){
+buscaAquiSudo(){
 echo "Busca con sudo todo lo que contenga \"$1\" en `pwd` y subcarpetas"
 sudo find `pwd` -iname "*$1*"
 }
 
-busca_aqui(){
+buscaAqui(){
 echo "Busca todo lo que contenga \"$1\" en `pwd` y subcarpetas"
 direccion=${pwd}
 find ${direccion} -iname "*${1}*" 2>/dev/null
@@ -191,6 +190,6 @@ sudo sed -i "s/#autologin-user=/autologin-user=${usuario}/g" /etc/lightdm/lightd
 sudo sed -i "s/#autologin-user-timeout=0/autologin-user-timeout=0/g" /etc/lightdm/lightdm.conf
 }
 
-alias it='sudo pkcon install'
-alias itd_aqui='sudo pkcon download ./' 
-alias bo='sudo pkcon remove'
+#alias it='sudo pkcon install'
+#alias itd_aqui='sudo pkcon download ./' 
+#alias bo='sudo pkcon remove'
