@@ -189,9 +189,9 @@ sudo cp -vua /var/cache/apt/archives/*.deb /var/cache/apt-cacher-ng/_import
 #Puede ser x-www-browser o gnome-browser o netsurf
 x-www-browser http://localhost:3142/acng-report.html?doImport=Start+Import
 sudo aptitude autoclean
-x-www-browser "http://localhost:3142/acng-report.html?abortOnErrors=aOe&byPath=bP&byChecksum=bS&truncNow=tN&incomAsDamaged=iad&purgeNow=pN&doExpire=Start+Scan+and%2For+Expiration&calcSize=cs&asNeeded=an#bottom" \ 
-&& x-www-browser http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged \
-&& x-www-browser http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
+x-www-browser "http://localhost:3142/acng-report.html?abortOnErrors=aOe&byPath=bP&byChecksum=bS&truncNow=tN&incomAsDamaged=iad&purgeNow=pN&doExpire=Start+Scan+and%2For+Expiration&calcSize=cs&asNeeded=an#bottom" && \
+x-www-browser http://localhost:3142/acng-report.html?justRemoveDamaged=Delete+damaged && \ 
+x-www-browser http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
 echo "Filtros usables:
   */archives*/
   */_import/*"
