@@ -113,8 +113,8 @@ apt-get -y --print-uris --no-install-recommends install "$@" | egrep -o -e "(ht|
 }
 
 itda(){
-echo "Descarga paquete $@ con sus respectivas dependencias faltantes"
-apt-get -y --print-uris --no-install-recommends install "$@" | egrep -o -e "(ht|f)tp://[^\']+" | xargs -l1 sudo axel -an 3 -d /var/cache/apt/archives
+echo "Descarga con aria2c paquete $@ con sus respectivas dependencias faltantes"
+apt-get -y --print-uris --no-install-recommends install "$@" | egrep -o -e "(ht|f)tp://[^\']+" | xargs -l1 sudo aria2c -c -s3 -x3 -d /var/cache/apt/archives
 }
 
 itdlis(){
