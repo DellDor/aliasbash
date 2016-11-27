@@ -184,7 +184,7 @@ curl http://localhost:3142/acng-report.html?justRemove=Delete+unreferenced
 limpia_apt_cachervisual(){
 #Limpiar repo local con lo ya presente en apt-cacher-ng. Versión con gui
 #HACER: Revisar si está instalado netsurf
-#~sudo fslint-gui /var/cache/{apt,apt-cacher-ng}
+sudo fslint-gui /var/cache/{apt,apt-cacher-ng}
 sudo cp -vua /var/cache/apt/archives/*.deb /var/cache/apt-cacher-ng/_import
 #Puede ser x-www-browser o gnome-browser o netsurf
 x-www-browser http://localhost:3142/acng-report.html?doImport=Start+Import
