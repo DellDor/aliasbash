@@ -7,7 +7,7 @@ complete -cf sudo
 alias sudo='sudo '
 
 set LC_MESSAGES="es"
-setxkbmap -layout latam #opción es
+#setxkbmap -layout latam #opción es
 
 tecladoesp(){
 set LC_MESSAGES="es"
@@ -48,10 +48,8 @@ fuente="https://raw.githubusercontent.com/DellDor/aliasbash/master"
 if wget -N -P$HOME $fuente/.bash_aliases_general.sh; then
 #if curl --fail -# $fuente/.bash_aliases_general.sh > $HOME/.bash_aliases_general.sh; then
 echo "#!/bin/bash
-if [ -f ~/.bash_aliases_local.sh ]; then
-. ~/.bash_aliases_local.sh
-fi
-. ~/.bash_aliases_general.sh" > $HOME/.bash_aliases
+. ~/.bash_aliases_general.sh
+" > $HOME/.bash_aliases
 chmod a+x $HOME/.bash_aliases_general.sh $HOME/.bash_aliases
 
 for i in .bash_aliases_debian.sh .bash_aliases_redes.sh; do
@@ -61,6 +59,13 @@ wget -N -P$HOME $fuente/$i
 chmod a+x $HOME/$i
 echo ". ~/$i" >> $HOME/.bash_aliases
 done
+
+echo "
+if [ -f ~/.bash_aliases_local.sh ]; then
+. ~/.bash_aliases_local.sh
+fi" >> $HOME/.bash_aliases
+
+
 #Detecta si se llama a bash_aliases desde .bashrc:
 if ! grep -qe "~/.bash_aliases ]" ~/.bashrc; then
 cat >> ~/.bashrc << EOD 
@@ -160,12 +165,12 @@ alias buscacontenido='grep -lir'
 #alias buscaqui='find "`pwd`" -iname'
 alias buscavacios='find "`pwd`" -empty'
 
-buscaAquiSudo(){
+buscaaquisudo(){
 echo "Busca con sudo todo lo que contenga \"$1\" en `pwd` y subcarpetas"
 sudo find `pwd` -iname "*$1*"
 }
 
-buscaAqui(){
+buscaaqui(){
 echo "Busca todo lo que contenga \"$1\" en `pwd` y subcarpetas"
 direccion=${pwd}
 find ${direccion} -iname "*${1}*" 2>/dev/null
@@ -174,7 +179,7 @@ Esta búsqueda se hizo sin sudo"
 }
 
 borra_vacio() {
-echo "Busca y pregunta para eliminar todos los directorios vacíos
+echo "Busca y pregunta para eliminar todos los directorios vacíos debajo del actual
 find ./ -empty -exec rm -ri {} \;"
 find ./ -empty -exec rm -vri {} \;
 }
