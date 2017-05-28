@@ -1,8 +1,7 @@
 #Aquí lo exclusivo a Debian y sus derivados: Mint, Ubuntu,etc
-#Se debe privilegiar el uso de aptitude y apt-get en segunda instancia, para evitarevitar conflictos en distribuciones rolling o semirroling
+#Se debe privilegiar el uso de aptitude y apt-get en segunda instancia, para evitar conflictos en distribuciones rolling o semirroling
 #Tratar de no usar apt porque dizque cambia mucho, segun su propia ayuda
-#MEJORA: Que se use pacapt
-
+#Se wctiva completación de aptitude:
 complete -F _aptitude $default install purge show search
 
 alias cdpkg='cd /var/cache/apt/archives'
@@ -10,8 +9,21 @@ alias a1='aptitude'
 alias a2='sudo aptitude'
 
 act0(){
-echo "Actualiza listado de paquetería"
+echo "Actualiza listado de paquetería, copiando los ya descargados"
+#sudo cp -vua /var/lib/apt/lists/ /var/lib/apt/lists/partial/
+sudo mkdir -p /var/tmp/listados_apt
+sudo rsync -vmt /var/lib/apt/lists/* /var/tmp/listados_apt --exclude 'lock'
+sudo rsync -vmt /var/tmp/listados_apt/* /var/lib/apt/lists/partial
+
 sudo apt-get update -o Acquire::Pdiff=true -o Acquire::Check-Valid-Until=false
+
+sudo rsync -vmt /var/lib/apt/lists/* /var/tmp/listados_apt --exclude 'lock'
+}
+
+
+act0s(){
+echo "Actualiza listado de paquetería sin diferenciales"
+sudo apt-get update -o Acquire::Pdiff=false -o Acquire::Check-Valid-Until=false
 }
 
 act1() {
@@ -106,7 +118,7 @@ aptitude search -F '%p' --disable-columns '~U'|xargs -l1 sudo apt-get install --
 #}
 
 itd(){
-echo "Descarga paquete $@ con sus respectivas dependencias faltantes"
+echo "Descarga con wget paquete $@ con sus respectivas dependencias faltantes"
 apt-get -y --print-uris --no-install-recommends install "$@" | egrep -o -e "(ht|f)tp://[^\']+" | xargs -l1 sudo wget -c -P/var/cache/apt/archives
 }
 
@@ -135,7 +147,8 @@ alias reconfigurar_todo='sudo dpkg --configure -a'
 #indica paquete que provee archivo
 alias paquete_duegno='dpkg -S'
 
-paquetes_huerfanos() {
+paquetes_huerfanos(){
+echo "Crea listado de paquetes huérfanos"
 sudo deborphan -a |awk '{ print $2  }'|sort > /tmp/paquetes.txt; xdg-open /tmp/paquetes.txt
 }
 
