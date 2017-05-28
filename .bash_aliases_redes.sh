@@ -10,11 +10,17 @@ done
 }
 
 alias dameip='curl -q icanhazip.com' #'wget -q icanhazip.com -O -'
-alias descarga='wget -c -P~/Descargas/'
 
 actualizahora(){
 if ! `whereis ntpdate` > /dev/null 2>&1; then
 it ntpdate
 fi
 sudo bash -c "ntpdate -uv south-america.pool.ntp.org && hwclock -w" 
+}
+
+alias descarga='wget -c -P~/Descargas/'
+
+descargaria(){
+echo "Descarga $@ con aria2c"
+aria2c -c -s3 -x3 -d $HOME/Descargas $@
 }
