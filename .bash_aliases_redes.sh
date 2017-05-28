@@ -24,3 +24,5 @@ descargaria(){
 echo "Descarga $@ con aria2c"
 aria2c -c -s3 -x3 -d $HOME/Descargas $@
 }
+
+alias redreinicia='if [[ $(ps -fe|grep nm-applet|grep -v grep)"x" = "x" ]]; then nm-applet & fi;sudo service NetworkManager stop;echo "Esperando 3 segundos"; sleep 3; sudo service NetworkManager start'
