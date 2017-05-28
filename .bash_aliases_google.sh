@@ -34,10 +34,19 @@ $gddirectoriobin import -p "0Bzx6jwjHbTo1dFJfb0l3TXpPNXc" "$@"
 
 gdimportaporextension(){
 gdactivadir
-
 for i in *.$1; do 
 $gddirectoriobin import -p "0Bzx6jwjHbTo1dFJfb0l3TXpPNXc" "$i"
 done
+}
+
+gdsubearbol(){
+#Transforma un archivo ctd de Cherrytree al formato odt y lo importa a Google Drive para que no ocupe espacio.
+directo=`mktemp -d`
+cp -v "${@}" $directo
+elnombre=`basename "${@}" ctd`; echo ${elnombre}
+mv -v $directo/"${elnombre}ctd" $directo/"${elnombre}xml"
+libreoffice --convert-to odt $directo/"${elnombre}xml" --outdir $directo
+gdimporta $directo/"${elnombre}odt"
 }
 
 #########Relacionados a youtube-dl
