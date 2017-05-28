@@ -1,4 +1,5 @@
 #!/bin/bash
+#########Relacionados a youtube-dl
 alias gdactivadir='gddirectoriobin=$HOME/Descargas/gdrive-linux-386'
 gddirectoriobin="$HOME/Descargas/gdrive-linux-386"
 
@@ -39,14 +40,17 @@ $gddirectoriobin import -p "0Bzx6jwjHbTo1dFJfb0l3TXpPNXc" "$i"
 done
 }
 
+#########Relacionados a youtube-dl
 alias youtubedescarga='youtube-dl -f mp4 -t -c -R infinite --no-part --console-title'
+
+alias youtube-dl='youtube-dl -c --no-part'
 
 youtubebusca(){
 mkdir -p ~/Descargas/Videos
 cd ~/Descargas/Videos
 youtube-dl -F $1 |grep -v only
 read -p "Señale un número para descargar: " n
-youtube-dl -f $n -c $1 --no-part --console-title
+youtube-dl -f $n -c $1 -R infinite --no-part --console-title
 }
 
 reportesemanal(){
@@ -55,4 +59,3 @@ cd $HOME/Descargas/RepSem/
 #youtube-dl -c -f 36 pmVT--Qp5iE
 youtube-dl -c -f 36 https://www.youtube.com/user/BricenoSemanal #--playlist-start 4
 }
-
