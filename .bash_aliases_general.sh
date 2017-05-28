@@ -6,9 +6,6 @@
 complete -cf sudo
 alias sudo='sudo '
 
-set LC_MESSAGES="es"
-#setxkbmap -layout latam #opción es
-
 tecladoesp(){
 set LC_MESSAGES="es"
 setxkbmap -layout es
@@ -18,6 +15,8 @@ tecladolatam(){
 set LC_MESSAGES="es"
 setxkbmap -layout latam
 }
+
+tecladoesp
 
 # Errores y advertencias de GCC coloreadas
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -52,7 +51,7 @@ echo "#!/bin/bash
 " > $HOME/.bash_aliases
 chmod a+x $HOME/.bash_aliases_general.sh $HOME/.bash_aliases
 
-for i in .bash_aliases_debian.sh .bash_aliases_redes.sh; do
+for i in .bash_aliases_debian.sh .bash_aliases_redes.sh .bash_aliases_google; do
 echo "Descargando $i"
 #curl -# $fuente/$i > $HOME/$i
 wget -N -P$HOME $fuente/$i
@@ -64,7 +63,6 @@ echo "
 if [ -f ~/.bash_aliases_local.sh ]; then
 . ~/.bash_aliases_local.sh
 fi" >> $HOME/.bash_aliases
-
 
 #Detecta si se llama a bash_aliases desde .bashrc:
 if ! grep -qe "~/.bash_aliases ]" ~/.bashrc; then
