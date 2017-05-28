@@ -1,5 +1,6 @@
-#5 feb 2016
+#!/bin/bash
 #Alias relacionados a red, independientes de la distribución
+
 pcg(){
 for i in {1..1000}; do
 echo $i
@@ -17,7 +18,3 @@ it ntpdate
 fi
 sudo bash -c "ntpdate -uv south-america.pool.ntp.org && hwclock -w" 
 }
-
-alias youtube-dl='youtube-dl -c --no-part'
-
-alias youtubedescarga='youtube-dl -f 17 -t -c --no-part --console-title'
