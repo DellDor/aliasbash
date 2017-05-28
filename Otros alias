@@ -1,0 +1,8 @@
+#Alias que están en local con informaciones cambiadas parq que estén aquí
+
+subearbol_pychem(){
+#Transforma un archivo de Cherrytree al formato odt y lo importa a Google Drive sin ocupar espacio.
+cp -v ~/Pychem-qt/Pychem-qt.ctd /tmp/Pychem-qt.xml
+libreoffice --convert-to odt /tmp/Pychem-qt.xml --outdir /tmp
+gdimporta /tmp/Pychem-qt.odt
+}
