@@ -40,17 +40,14 @@ marca_dependientes(){
 sudo aptitude markauto $(aptitude search '?installed ?not(?automatic) ?or(?reverse-recommends(?installed),?reverse-Depends(?installed))' -F %p)
 }
 
-act_maquina(){
-echo "Actualiza los paquetes señalados en ~.importantes_pkg"
-if [ -f $HOME/.importantes_pkg ]; then
-for i in $(cat $HOME/.importantes_pkg); do
-sudo killall apt-get apt-mark
-sudo apt-get install --no-remove -y --allow-unauthenticated $i
+actmaquina(){
+read "Actualiza los paquetes señalados en los archivos en /etc/aptitude-robot/pkglists/. Pulsa Enter para continuar" a
+for i in $(ls -I "*.*" /etc/aptitude-robot/pkglist.d/); do
+grep -v ^# /etc/aptitude-robot/pkglist.d/$i|awk '{print $2$1}'|xargs apt-get install -y --no-remove -y --allow-unauthenticated
 done
-fi
 }
 
-act_importantes(){
+actimportantes(){
 echo "Actualiza paquetes de seguridad, importantes y requeridos" 
 #sudo bash -c "grep -h '^deb.*security' /etc/apt/sources.list /etc/apt/sources.list.d/* >/tmp/borrame && aptitude safe-upgrade -o Dir::Etc::SourceList=/tmp/borrame -o Dir::Etc::sourceparts=/nonexistingdir &&
 sudo bash -c "LANG=C apt-get dist-upgrade -s|grep Debian-Security| cut -d' ' -f2|sort|uniq|xargs apt-get install;
