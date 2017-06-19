@@ -43,7 +43,8 @@ sudo aptitude markauto $(aptitude search '?installed ?not(?automatic) ?or(?rever
 actmaquina(){
 read "Actualiza los paquetes señalados en los archivos en /etc/aptitude-robot/pkglists/. Pulsa Enter para continuar" a
 for i in $(ls -I "*.*" /etc/aptitude-robot/pkglist.d/); do
-grep -v ^# /etc/aptitude-robot/pkglist.d/$i|awk '{print $2$1}'|xargs apt-get install -y --no-remove -y --allow-unauthenticated
+#grep -v ^# /etc/aptitude-robot/pkglist.d/$i|awk '{print $2$1}'|xargs apt-get install -y --no-remove -y --allow-unauthenticated
+grep -v ^# /etc/aptitude-robot/pkglist.d/$i|awk '{print $2$1}'|xargs sudo aptitude install -y -o APT:Get:Remove=No #-o Acquire::AllowInsecureRepositories=yes
 done
 }
 
