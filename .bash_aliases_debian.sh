@@ -137,7 +137,7 @@ alias itv='sudo aptitude install --visual-preview'
 alias bop='sudo aptitude remove'
 alias itdp='sudo aptitude install -d'
 
-alias libera_apt='sudo rm -v /var/{lib/dpkg/lock,cache/apt/archives/lock,lock/aptitude} /var/lib/apt/lists/*'
+alias liberaapt='sudo rm -v /var/{lib/dpkg/lock,cache/apt/archives/lock,lock/aptitude}' #/var/lib/apt/lists/*'
 
 alias reconfigurar_todo='sudo dpkg --configure -a'
 #alias bo='sudo aptitude remove --purge --visual-preview'
