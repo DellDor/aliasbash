@@ -51,7 +51,7 @@ echo "#!/bin/bash
 " > $HOME/.bash_aliases
 chmod a+x $HOME/.bash_aliases_general.sh $HOME/.bash_aliases
 
-for i in .bash_aliases_debian.sh .bash_aliases_redes.sh .bash_aliases_google.sh; do
+for i in .bash_aliases_debian.sh .bash_aliases_redes.sh .bash_aliases_google.sh .bash_aliases_instaladoresdebian.sh; do
 echo "Descargando $i"
 #curl -# $fuente/$i > $HOME/$i
 wget -N -P$HOME $fuente/$i
