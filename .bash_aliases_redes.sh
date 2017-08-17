@@ -34,8 +34,8 @@ echo $i
 until ping -nq -c3 8.8.8.8; do notify-send "<b>NO</b> hay internet"
 done
 #yad --center --window-icon="gtk-execute" --information --no-buttons --on-top --sticky --text "Hay internet" --timeout 2 --timeout-indicator=top 2>/dev/null
-notify-send "Hay internet"
-sleep 50
+#notify-send "Hay internet"
+sleep 1m
 done
 }
 
