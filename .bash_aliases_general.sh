@@ -176,7 +176,7 @@ echo "**************************
 Esta búsqueda se hizo sin sudo"
 }
 
-borra_vacio() {
+borravacio() {
 echo "Busca y pregunta para eliminar todos los directorios vacíos debajo del actual
 find ./ -empty -exec rm -ri {} \;"
 find ./ -empty -exec rm -vri {} \;
