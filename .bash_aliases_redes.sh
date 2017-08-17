@@ -26,3 +26,15 @@ aria2c -c -s3 -x3 -d $HOME/Descargas $@
 }
 
 alias redreinicia='if [[ $(ps -fe|grep nm-applet|grep -v grep)"x" = "x" ]]; then nm-applet & fi;sudo service NetworkManager stop;echo "Esperando 3 segundos"; sleep 3; sudo service NetworkManager start'
+
+hayinternet(){
+#Verifica si hay internet y muestra el estado
+for i in {1..1000}; do
+echo $i
+until ping -nq -c3 8.8.8.8; do notify-send "<b>NO</b> hay internet"
+done
+#yad --center --window-icon="gtk-execute" --information --no-buttons --on-top --sticky --text "Hay internet" --timeout 2 --timeout-indicator=top 2>/dev/null
+notify-send "Hay internet"
+sleep 50
+done
+}
