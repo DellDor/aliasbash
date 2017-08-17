@@ -39,7 +39,6 @@ directorio=http://httpredir.debian.org/debian/pool/main/t/telegram-desktop
 aria2c -c -s3 -x3 -d /var/tmp/paquetes $directorio/$(url -q -L -o - $directorio|grep $plataforma.deb|grep -v dev_| cut -d\" -f8)
 find /var/tmp/paquetes -iname "*.deb" -amin -30 -exec sudo gdebi-gtk {} \;
 }
-}
 
 des_opera(){
 prepara_des
