@@ -38,3 +38,10 @@ notify-send "Hay internet"
 sleep 50
 done
 }
+
+esperainternet(){
+#Útil para ejecutar comandos cuando llegue haya conexión a internet
+until ping -nq -c3 8.8.8.8; do echo "Sin internet aún..."
+done
+echo "Reanudada la conexión o cancelada la espera"
+}
