@@ -50,9 +50,11 @@ gdimporta $directo/"${elnombre}odt"
 }
 
 #########Relacionados a youtube-dl
-alias youtubedescarga='youtube-dl -f mp4 -t -c -R infinite --no-part --console-title'
+youtubedescarga(){
+youtube-dl -f 18/43/22/36 -t -c -R infinite --no-part ${@}
+}
 
-alias youtube-dl='youtube-dl -c --no-part'
+alias youtube-dl='youtube-dl -c --no-part -R infinite'
 
 youtubebusca(){
 mkdir -p ~/Descargas/Videos
