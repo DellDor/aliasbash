@@ -114,6 +114,21 @@ read -p "Enter para continuar con posibilidad de preguntar si borrar algún paqu
 aptitude search -F '%p' --disable-columns '~U'|xargs -l1 sudo apt-get install --allow-unauthenticated
 }
 
+actuno_por_unoportamagno(){
+xr4i25feb(){ for i in `aptitude search '~U' -F %p|xargs apt-cache --no-all-versions show | awk '$1 == "Package:" { p = $2 }; $1 == "Size:"    { printf("%d %s\n", $2, p) }'|sort -n|cut -d' ' -f2`; do 
+#until ping -nq -c5 https://prenotaonline.esteri.it; do echo "Esperando internet..."; done
+needrestart -b
+echo "Se va a actualizar ${i}. Esperando 3 segundos para continuar"
+sleep 3
+apt-get install --no-remove --assume-no --allow-unauthenticated ${i}; done
+#~ needrestart -ri
+}
+export -f xr4i25feb
+sudo needrestart -b
+su -c xr4i25feb
+sudo needrestart -ri
+}
+
 #it(){
 #Solo aptitude permite untrusted con opción directa
 #echo "A instalar $@"
@@ -306,4 +321,23 @@ sudo find /var/tmp -size +512k -exec rm {} \;
 rm -i $(sudo find /var/tmp -type f -printf '%s %p\n'| sort -nr |cut -d" " -f2)
 seguir
 miracache
+}
+
+apr(){
+#Lo siguiente marca para dejar como está todo lo que se vaya a actualizar a versión inestable con aptitude-robot
+temporal=$(mktemp)
+for i in $(aptitude search ~U -F %p"$"%V| grep -e +b -e beta -e ~rc -e ~pre|cut -d"$" -f1); do
+echo "= $i" | tee -a $temporal
+done
+sudo cp -v $temporal /etc/aptitude-robot/pkglist.d/zzz_betas_automatico
+
+#Continúa con la pregunta sobre si instalar/actualizar
+until ping -nq -c5 8.8.8.8; do echo "Esperando internet..."; done
+sudo aptitude-robot
+}
+
+alias apr-listas='sudo geany /etc/aptitude-robot/pkglist.d/*'
+
+buscapaquete(){
+apt-cache search "$@"
 }
