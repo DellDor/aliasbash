@@ -8,6 +8,7 @@ alias cdpkg='cd /var/cache/apt/archives'
 alias a1='aptitude'
 alias a2='sudo aptitude'
 alias a3='sudo aptitude install --visual-preview --schedule-only dpkg:' #abre sin cambios marcados.
+alias actsafe='sudo aptitude safe-upgrade --visual-preview' #Actualiza desactivando posibles eliminaciòn por dependencias.
 
 act0(){
 echo "Actualiza listado de paquetería, copiando los ya descargados"
