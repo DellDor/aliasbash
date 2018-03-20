@@ -24,9 +24,10 @@ else
 plataforma="x64"
 fi
 
-mkdir -p /var/tmp/paquetes
-wget -c -P /var/tmp/paquetes "https://github.com"$(curl -q -L -o - $directorio|grep $plataforma.deb|head -n 1|cut -d\" -f2)
-sudo gdebi-gtk /var/tmp/Rambox*
+mkdir -p /var/tmp/Paquetes
+wget -c -P /var/tmp/Paquetes "https://github.com"$(curl -q -L -o - $directorio|grep $plataforma.deb|head -n 1|cut -d\" -f2) && \
+find /var/tmp/Paquetes -iname "*.deb" -amin -30 -exec sudo gdebi-gtk {} \;
+#sudo gdebi-gtk /var/tmp/Rambox*
 }
 
 des_telegram(){
@@ -38,6 +39,25 @@ aria2c -c -s3 -x3 -d /var/tmp/paquetes HOME/Descargas/Paquetes $directorio/$(cur
 directorio=http://httpredir.debian.org/debian/pool/main/t/telegram-desktop
 aria2c -c -s3 -x3 -d /var/tmp/paquetes $directorio/$(url -q -L -o - $directorio|grep $plataforma.deb|grep -v dev_| cut -d\" -f8)
 find /var/tmp/paquetes -iname "*.deb" -amin -30 -exec sudo gdebi-gtk {} \;
+}
+
+des_jaxx(){
+#Paquete Appimage en releases de github 
+#https://jaxx.io/downloads.html#downloadTable
+#http://tecnobits.xyz/las-mejores-wallets-ethereum/
+#https://www.criptonoticias.com/tutoriales/tutorial-usando-jaxx-cartera-criptomonedas-cualquier-plataforma/
+#https://steemit.com/bitcoin/@criptoinka/instalar-jaxx-wallet-en-linux-ubuntu-fedora-debian
+#https://localethereum.com/offers/Venezuela/Buy
+directorio="https://github.com/Jaxx-io/Jaxx/releases/"
+if [ $(uname -m) == 'i686' ]; then
+plataforma="i386"
+else
+plataforma="x86_64"
+fi
+
+mkdir -p /var/tmp/paquetes
+wget -c -P /var/tmp/paquetes "https://github.com"$(curl -q -L -o - $directorio|grep $plataforma|head -n 1 |cut -d\" -f2) && archivo=$(find /var/tmp/paquetes/ -iname "jaxx-*.AppImage") && sudo install -v -m a+x -D $archivo /opt/jaxx/$(basename $archivo)
+#34145adb7b1da59b0cf9b9d0339ee10014252e4a  
 }
 
 des_opera(){
@@ -65,4 +85,15 @@ des_pychemqt(){
 #Descarga caarpeta completa de github del simulador Pychem-Qt
 mkdir -p $(xdg-user-dir DESKTOP)/PyCQt
 wget -Nc -P $(xdg-user-dir DESKTOP)/PyCQt https://github.com/jjgomera/pychemqt/archive/master.zip
+}
+
+des_josm(){
+sudo aptitude --visual-preview intall proj-data openjfx
+#Descarga última versióń de JOSM
+directorio=https://josm.openstreetmap.de/apt/pool/universe/j/josm
+descargar=$directorio/$(curl -q -L -o - $directorio|grep href|tail -n1|cut -d\" -f8)
+echo $descargar
+#aria2c -c -s3 -x3 -d /var/tmp/paquetes $descargar
+wget -c -P /var/tmp/ $descargar
+gdebi-gtk /var/tmp/josm_*.deb
 }
