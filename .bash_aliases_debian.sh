@@ -326,7 +326,7 @@ miracache
 apr(){
 #Lo siguiente marca para dejar como está todo lo que se vaya a actualizar a versión inestable con aptitude-robot
 temporal=$(mktemp)
-for i in $(aptitude search ~U -F %p"$"%V| grep -e +b -e beta -e ~rc -e ~pre|cut -d"$" -f1); do
+for i in $(aptitude search ~U -F %p"$"%V| grep -e +b -e beta -e ~rc -e ~pre -e ~alpha|cut -d"$" -f1); do
 echo "= $i" | tee -a $temporal
 done
 sudo cp -v $temporal /etc/aptitude-robot/pkglist.d/zzz_betas_automatico
@@ -337,6 +337,10 @@ sudo aptitude-robot
 }
 
 alias apr-listas='sudo geany /etc/aptitude-robot/pkglist.d/*'
+
+apr-local(){
+sudo geany /etc/aptitude-robot/pkglist.d/99_esta_maquina 
+}
 
 buscapaquete(){
 apt-cache search "$@"
