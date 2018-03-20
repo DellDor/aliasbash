@@ -342,6 +342,47 @@ apr-local(){
 sudo geany /etc/aptitude-robot/pkglist.d/99_esta_maquina 
 }
 
+aprselecciona(){
+#Permite activar o desactivar archivos de apr
+salida=""
+cd /etc/aptitude-robot/pkglist.d/
+listado=$(ls -I "*.*"|grep -v zzz)
+listado="$listado $(ls *.inactivo)"
+
+activos=$(ls -I "*.*"|grep -v zzz)
+k=0
+for i in $(echo $activos); do
+archivos[$k]=$i
+let k=k+1
+salida="$salida --field=$i:CHK TRUE"
+done
+
+inactivos=$(ls *.inactivo)
+for i in $(echo $inactivos); do
+archivos[$k]=$i
+let k=k+1
+salida="$salida --field=$i:CHK FALSE"
+done
+
+resultado=$(yad --center --form --columns=3 $salida)
+k=0
+for i in $(echo $resultado| tr '|' '\n'); do
+booleano[k]=$i
+let k=k+1
+done
+
+let k=k-1
+
+for ((i=0;i<=k;i++)); do
+elfile=$(echo ${archivos[$i]}| awk -F '.inactivo' '{ print $1}')
+if [ ${booleano[${i}]} = "TRUE" ]; then
+sudo mv ${archivos[$i]} ${elfile}
+else
+sudo mv ${archivos[$i]} "${elfile}.inactivo"
+fi
+done
+}
+
 buscapaquete(){
 apt-cache search "$@"
 }
